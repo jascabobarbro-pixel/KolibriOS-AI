@@ -1,0 +1,155 @@
+syntax = "proto3";
+
+package kolibrios.cnd;
+
+import "cell_common.proto";
+import "memory_cell.proto";
+import "processor_cell.proto";
+
+// Central Neural Device (CND) Orchestrator Service
+// Coordinates all cells and makes system-wide decisions
+
+// Cell registration
+message RegisterCellRequest {
+    string cell_id = 1;
+    string cell_type = 2;              // "memory", "processor", "io", "network", "ai"
+    string endpoint = 3;               // gRPC endpoint
+    map<string, string> capabilities = 4;
+}
+
+message RegisterCellResponse {
+    bool success = 1;
+    string orchestrator_id = 2;
+    int64 heartbeat_interval_ms = 3;
+}
+
+// System-wide metrics
+message SystemMetrics {
+    int64 timestamp = 1;
+    kolibrios.cell.memory.MemoryStats memory_stats = 2;
+    kolibrios.cell.processor.CpuStats cpu_stats = 3;
+    double system_load = 4;
+    kolibrios.cell.HealthStatus overall_health = 5;
+    repeated CellMetrics cell_metrics = 6;
+}
+
+message CellMetrics {
+    string cell_id = 1;
+    string cell_type = 2;
+    kolibrios.cell.CellStatus status = 3;
+    kolibrios.cell.HealthStatus health = 4;
+    map<string, double> custom_metrics = 5;
+}
+
+// System command
+message SystemCommand {
+    string command_id = 1;
+    CommandType type = 2;
+    map<string, string> parameters = 3;
+    int64 timestamp = 4;
+}
+
+enum CommandType {
+    COMMAND_TYPE_UNSPECIFIED = 0;
+    COMMAND_TYPE_ALLOCATE_MEMORY = 1;
+    COMMAND_TYPE_RELEASE_MEMORY = 2;
+    COMMAND_TYPE_SCALE_CPU = 3;
+    COMMAND_TYPE_MIGRATE_TASK = 4;
+    COMMAND_TYPE_REBALANCE = 5;
+    COMMAND_TYPE_HEAL_CELL = 6;
+    COMMAND_TYPE_SHUTDOWN_CELL = 7;
+    COMMAND_TYPE_RESTART_CELL = 8;
+}
+
+// Command result
+message CommandResult {
+    string command_id = 1;
+    bool success = 2;
+    string message = 3;
+    map<string, string> result_data = 4;
+}
+
+// Alert definition
+message Alert {
+    string alert_id = 1;
+    AlertSeverity severity = 2;
+    string source_cell = 3;
+    string message = 4;
+    int64 timestamp = 5;
+    map<string, string> metadata = 6;
+}
+
+enum AlertSeverity {
+    ALERT_SEVERITY_UNSPECIFIED = 0;
+    ALERT_SEVERITY_INFO = 1;
+    ALERT_SEVERITY_WARNING = 2;
+    ALERT_SEVERITY_ERROR = 3;
+    ALERT_SEVERITY_CRITICAL = 4;
+}
+
+// CND Service Definition
+service CndOrchestratorService {
+    // Cell management
+    rpc RegisterCell(RegisterCellRequest) returns (RegisterCellResponse);
+    rpc UnregisterCell(UnregisterCellRequest) returns (kolibrios.cell.CommandResponse);
+    rpc ListCells(kolibrios.cell.Empty) returns (stream CellInfo);
+    
+    // Metrics and monitoring
+    rpc GetSystemMetrics(kolibrios.cell.Empty) returns (SystemMetrics);
+    rpc SubscribeMetrics(SubscribeMetricsRequest) returns (stream SystemMetrics);
+    rpc GetAlerts(kolibrios.cell.Empty) returns (stream Alert);
+    
+    // Command execution
+    rpc ExecuteCommand(SystemCommand) returns (CommandResult);
+    rpc BatchExecuteCommands(stream SystemCommand) returns (stream CommandResult);
+    
+    // Health and recovery
+    rpc RunSystemDiagnostics(kolibrios.cell.Empty) returns (SystemDiagnosticsResult);
+    rpc InitiateRecovery(RecoveryRequest) returns (kolibrios.cell.CommandResponse);
+}
+
+// Unregister cell request
+message UnregisterCellRequest {
+    string cell_id = 1;
+    bool graceful = 2;
+}
+
+// Cell information
+message CellInfo {
+    string cell_id = 1;
+    string cell_type = 2;
+    string endpoint = 3;
+    kolibrios.cell.CellStatus status = 4;
+    kolibrios.cell.HealthStatus health = 5;
+    int64 last_heartbeat = 6;
+    map<string, string> capabilities = 7;
+}
+
+// Subscribe to metrics
+message SubscribeMetricsRequest {
+    int32 interval_ms = 1;
+    repeated string metric_names = 2;  // Empty = all metrics
+}
+
+// System diagnostics result
+message SystemDiagnosticsResult {
+    bool healthy = 1;
+    repeated kolibrios.cell.memory.DiagnosticIssue memory_issues = 2;
+    repeated kolibrios.cell.processor.DiagnosticIssue processor_issues = 3;
+    repeated string recommendations = 4;
+    double overall_health_score = 5;
+}
+
+// Recovery request
+message RecoveryRequest {
+    string target_cell_id = 1;         // Empty = system-wide recovery
+    RecoveryStrategy strategy = 2;
+}
+
+enum RecoveryStrategy {
+    RECOVERY_STRATEGY_UNSPECIFIED = 0;
+    RECOVERY_STRATEGY_RESTART = 1;
+    RECOVERY_STRATEGY_FAILOVER = 2;
+    RECOVERY_STRATEGY_DEGRADED_MODE = 3;
+    RECOVERY_STRATEGY_FULL_RESET = 4;
+}

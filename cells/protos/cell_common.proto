@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package kolibrios.cell;
+
+// Common message types for inter-cell communication
+
+// Status of a cell
+enum CellStatus {
+    CELL_STATUS_UNSPECIFIED = 0;
+    CELL_STATUS_INITIALIZING = 1;
+    CELL_STATUS_ACTIVE = 2;
+    CELL_STATUS_DEGRADED = 3;
+    CELL_STATUS_HEALING = 4;
+    CELL_STATUS_SHUTDOWN = 5;
+}
+
+// Health status
+enum HealthStatus {
+    HEALTH_STATUS_UNSPECIFIED = 0;
+    HEALTH_STATUS_HEALTHY = 1;
+    HEALTH_STATUS_WARNING = 2;
+    HEALTH_STATUS_CRITICAL = 3;
+}
+
+// Generic response for commands
+message CommandResponse {
+    bool success = 1;
+    string message = 2;
+    int32 error_code = 3;
+    map<string, string> metadata = 4;
+}
+
+// Metrics message for monitoring
+message Metrics {
+    string cell_id = 1;
+    string cell_type = 2;
+    int64 timestamp = 3;
+    map<string, double> gauge_metrics = 4;
+    map<string, int64> counter_metrics = 5;
+    CellStatus status = 6;
+    HealthStatus health = 7;
+}
+
+// Heartbeat message
+message Heartbeat {
+    string cell_id = 1;
+    int64 timestamp = 2;
+    CellStatus status = 3;
+    HealthStatus health = 4;
+}
+
+// Empty message for requests that don't need parameters
+message Empty {}

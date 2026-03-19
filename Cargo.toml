@@ -1,0 +1,53 @@
+[workspace]
+resolver = "2"
+members = [
+    "kernel",
+    "cells/memory_cell",
+    "cells/processor_cell",
+    "cells/io_cell",
+    "cells/network_cell",
+    "cells/process_cell",
+    "cells/ai_cell",
+    "koli_lang/compiler",
+    "koli_lang/runtime",
+    "unified_ai_agent/core",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+repository = "https://github.com/user/KolibriOS-AI"
+authors = ["KolibriOS AI Team"]
+
+[workspace.dependencies]
+# Core dependencies for the entire workspace
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+thiserror = "1.0"
+anyhow = "1.0"
+log = "0.4"
+env_logger = "0.11"
+
+# Async runtime
+tokio = { version = "1.35", features = ["full"] }
+
+# Testing
+proptest = "1.4"
+criterion = "0.5"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true
+
+[profile.dev]
+opt-level = 0
+debug = true
+overflow-checks = true
+
+[profile.test]
+opt-level = 2
+debug = true
