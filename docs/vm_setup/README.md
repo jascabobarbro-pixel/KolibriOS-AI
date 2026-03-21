@@ -1,181 +1,345 @@
-# KolibriOS AI - VM Setup Guide
+# KolibriOS AI Virtual Machine Module
 
-This document provides complete instructions for setting up a QEMU-based virtual machine to run and test KolibriOS AI.
+## Overview
 
----
+The KolibriOS AI VM module provides comprehensive virtualization support using QEMU. It enables running KolibriOS AI in isolated virtual machines with hardware acceleration.
 
-## Prerequisites
+## Features
 
-### Software Requirements
+- **VM Lifecycle Management**: Create, start, stop, pause, and resume VMs
+- **Hardware Acceleration**: Support for KVM (Linux), HVF (macOS), and WHPX (Windows)
+- **Device Hotplug**: Add/remove devices at runtime
+- **Memory Management**: Hugepage support, memory ballooning
+- **CPU Hotplug**: Dynamic CPU allocation
+- **Network Configuration**: User-mode, TAP, bridge networking
+- **Storage Management**: Multiple disk formats (qcow2, raw, vmdk)
+- **QEMU Monitor**: Full control interface via TCP or Unix socket
 
-| Package | Version | Purpose |
-|---------|---------|---------|
-| QEMU | 7.0+ | Virtual Machine |
-| xorriso | 1.5+ | ISO creation |
-| grub-pc-bin | latest | Bootloader |
-| mtools | latest | Disk tools |
-| nasm | 2.5+ | Assembly |
-| Rust | 1.70+ | Kernel compilation |
+## Installation
 
-### Installation
+### Prerequisites
 
-#### Ubuntu/Debian
+1. **QEMU** - Install QEMU for your platform:
+   ```bash
+   # Ubuntu/Debian
+   sudo apt install qemu-system-x86 qemu-utils
+
+   # Fedora
+   sudo dnf install qemu qemu-img
+
+   # macOS
+   brew install qemu
+
+   # Windows
+   # Download from https://www.qemu.org/download/
+   ```
+
+2. **KVM** (Linux only) - For hardware acceleration:
+   ```bash
+   sudo apt install qemu-kvm
+   sudo usermod -aG kvm $USER
+   ```
+
+3. **Rust** - Install Rust toolchain:
+   ```bash
+   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+   ```
+
+### Building
 
 ```bash
-sudo apt-get update
-sudo apt-get install -y qemu-system-x86 qemu-utils xorriso grub-pc-bin grub-common mtools nasm
+cd kolibrios-ai
+cargo build --release -p kolibrios-vm
 ```
-
-#### Fedora
-
-```bash
-sudo dnf install -y qemu-system-x86 qemu-img xorriso grub2-pc nasm
-```
-
-#### Arch Linux
-
-```bash
-sudo pacman -S qemu-system-x86 qemu-img xorriso grub nasm
-```
-
-### Rust Setup
-
-Add the x86_64 bare metal target:
-
-```bash
-rustup target add x86_64-unknown-none
-rustup toolchain install nightly
-rustup target add x86_64-unknown-none --toolchain nightly
-```
-
----
 
 ## Quick Start
 
-### 1. Build
+### Creating a VM
 
-```bash
-# Clone and Build
-git clone https://github.com/jascabobarbro-pixel/KolibriOS-AI.git
-cd KolibriOS-AI
-make all
+```rust
+use kolibrios_vm::{QemuVm, QemuConfig, create_kolibrios_vm_config};
+
+#[tokio::main]
+async fn main() {
+    // Create VM configuration
+    let config = create_kolibrios_vm_config(
+        "my-kolibrios-vm",
+        "/var/lib/kolibrios/disk.qcow2",
+        4096,  // 4GB RAM
+        4,     // 4 CPUs
+    );
+
+    // Create and start VM
+    let mut vm = QemuVm::new(config);
+    vm.start().await.expect("Failed to start VM");
+    
+    println!("VM is running!");
+    
+    // Stop VM when done
+    vm.stop().await.expect("Failed to stop VM");
+}
 ```
 
-### 2. Launch VM
+### Using the Virtual Machine Manager
 
-```bash
-# Quick launch
-./scripts/launch_vm.sh
+```rust
+use kolibrios_vm::vmm::VirtualMachineManager;
+use kolibrios_vm::QemuConfig;
 
-# Or with custom settings
-VM_CPUS=4 VM_MEMORY=8192 ./scripts/launch_vm.sh
+#[tokio::main]
+async fn main() {
+    let vmm = VirtualMachineManager::new();
+    
+    // Create a VM
+    let config = QemuConfig {
+        name: "test-vm".to_string(),
+        cpu_count: 2,
+        memory: kolibrios_vm::MemoryConfig {
+            size_mb: 2048,
+            ..Default::default()
+        },
+        ..Default::default()
+    };
+    
+    let vm_id = vmm.create_vm(config).await.unwrap();
+    
+    // Start the VM
+    vmm.start_vm(&vm_id).await.unwrap();
+    
+    // List all VMs
+    let vms = vmm.list_vms().await;
+    println!("Running VMs: {:?}", vms);
+    
+    // Get statistics
+    let stats = vmm.get_stats().await;
+    println!("Running count: {}", stats.running_count);
+}
 ```
 
-### 3. Debug Mode
+## Configuration
 
-```bash
-# Launch with GDB debugging
-./scripts/setup_vm.sh --debug
+### VM Configuration Options
 
-# Connect GDB
-gdb
-(gdb) target remote localhost:1234
+| Option | Description | Default |
+|--------|-------------|---------|
+| `name` | VM name | "kolibrios-vm" |
+| `machine` | Machine type (Q35, PC, Microvm) | Q35 |
+| `cpu_count` | Number of vCPUs | 2 |
+| `cpu_type` | CPU model (Host, Qemu64, etc.) | Host |
+| `acceleration` | Acceleration type (KVM, HVF, TCG) | Auto |
+| `memory.size_mb` | RAM size in MB | 1024 |
+| `boot_device` | Boot device (Disk, Cdrom, Network) | Disk |
+
+### Network Configuration
+
+```rust
+use kolibrios_vm::{NetworkConfig, NetworkBackend, PortForward};
+
+let network = NetworkConfig {
+    backend: NetworkBackend::User,
+    device_model: "virtio-net-pci".to_string(),
+    port_forwards: vec![
+        PortForward {
+            host_port: 8080,
+            guest_port: 80,
+            protocol: "tcp".to_string(),
+        },
+    ],
+    ..Default::default()
+};
 ```
 
----
+### Storage Configuration
 
-## VM Configuration
+```rust
+use kolibrios_vm::{StorageConfig, StorageInterface};
 
-The Parameter | Default | Description |
-| --------- | ------- | ----------- |
-| CPUs | 2 | Number of virtual CPU cores |
-| Memory | 4GB | RAM allocated to VM |
-| Disk | 10GB | QCOW2 disk image size |
-| VNC Port | 5900 | VNC display port |
-| Serial | stdio | Kernel debug output |
-| Monitor | 4444 | QEMU monitor port |
-
----
-
-## Files Reference
-
-| File | Purpose |
-| ---- | ------- |
-| `scripts/setup_vm.sh` | Full VM setup script |
-| `scripts/launch_vm.sh` | Quick launch script |
-| `scripts/build_iso.sh` | ISO build script |
-| `boot/kolibritos_ai.iso` | Bootable ISO image |
-| `vm/kolibrios_ai.qcow2` | QCOW2 disk image |
-
----
-
-## Testing
-
-### Automated Tests
-
-Run from the project root:
-
-```bash
-# Run all tests
-make test
-
-# Or run specific VM tests
-pytest tests/vm_tests.py -v
+let storage = StorageConfig {
+    file_path: "/var/lib/vm/disk.qcow2".to_string(),
+    format: "qcow2".to_string(),
+    interface: StorageInterface::Virtio,
+    cache_mode: "writeback".to_string(),
+    ..Default::default()
+};
 ```
 
-### Manual Testing Checklist
+## Device Management
 
-- [ ] VM boots successfully
-- [ ] Kernel outputs to serial console
-- [ ] Cells start responding
-- [ ] CND orchestrator coordinates cells
-- [ ] Unified Mind accepts commands
-- [ ] Network connectivity works
-- [ ] Disk I/O functions correctly
-- [ ] Memory allocation works
-- [ ] Self-healing triggers correctly
+### Adding Network Device
 
----
+```rust
+use kolibrios_vm::device::NetworkDeviceBuilder;
+
+let (device, backend) = NetworkDeviceBuilder::new("net0")
+    .driver("virtio-net-pci")
+    .auto_mac()
+    .user_mode()
+    .port_forward(8080, 80, "tcp")
+    .build();
+```
+
+### Adding Storage Device
+
+```rust
+use kolibrios_vm::device::StorageDeviceBuilder;
+
+let (device, drive) = StorageDeviceBuilder::new("disk0")
+    .file("/var/lib/vm/disk.qcow2")
+    .format("qcow2")
+    .cache("writeback")
+    .build();
+```
+
+### Adding USB Device
+
+```rust
+use kolibrios_vm::device::UsbDeviceBuilder;
+
+let tablet = UsbDeviceBuilder::new("usb0")
+    .tablet()
+    .build();
+```
+
+## Memory Management
+
+### Using Hugepages
+
+```rust
+use kolibrios_vm::memory::{MemoryRegion, HugepageSize};
+
+let region = MemoryRegion::new_hugepages(
+    "hugepage-mem",
+    1024 * 1024 * 1024,  // 1GB
+    HugepageSize::Huge2M,
+);
+```
+
+### Memory Ballooning
+
+```rust
+use kolibrios_vm::memory::MemoryBalloon;
+
+let mut balloon = MemoryBalloon::new("balloon0", 1024 * 1024 * 1024);
+
+// Inflate to reclaim memory
+balloon.inflate(512 * 1024 * 1024).unwrap();
+
+// Deflate to give memory back
+balloon.deflate(256 * 1024 * 1024).unwrap();
+```
+
+## CPU Management
+
+### CPU Topology
+
+```rust
+use kolibrios_vm::cpu::{VcpuConfig, CpuTopology};
+
+let config = VcpuConfig::new("host", 8)
+    .with_topology(2, 4, 1);  // 2 sockets, 4 cores, 1 thread
+```
+
+### CPU Hotplug
+
+```rust
+use kolibrios_vm::cpu::VirtualCpuManager;
+
+let manager = VirtualCpuManager::new(config);
+
+// Hotplug a new CPU
+let new_cpu_id = manager.hotplug_cpu().await.unwrap();
+
+// Hotunplug a CPU
+manager.hotunplug_cpu(new_cpu_id).await.unwrap();
+```
+
+## QEMU Monitor
+
+The QEMU monitor provides full control over the VM:
+
+```rust
+use kolibrios_vm::QemuMonitor;
+
+let mut monitor = QemuMonitor::new();
+
+// Connect to monitor
+monitor.connect_tcp(4444).await.unwrap();
+
+// Pause VM
+monitor.pause().await.unwrap();
+
+// Resume VM
+monitor.resume().await.unwrap();
+
+// Get status
+let status = monitor.status().await.unwrap();
+println!("VM Status: {}", status);
+
+// Save VM state
+monitor.save_vm("snapshot1").await.unwrap();
+
+// Load VM state
+monitor.load_vm("snapshot1").await.unwrap();
+```
+
+## Disk Image Management
+
+```rust
+use kolibrios_vm::QemuImage;
+
+// Create a new disk image
+QemuImage::create(
+    "/var/lib/vm/disk.qcow2",
+    "10G",
+    "qcow2"
+).await.unwrap();
+
+// Convert disk image format
+QemuImage::convert(
+    "/var/lib/vm/disk.raw",
+    "/var/lib/vm/disk.qcow2",
+    "qcow2"
+).await.unwrap();
+
+// Get disk info
+let info = QemuImage::info("/var/lib/vm/disk.qcow2").await.unwrap();
+println!("Disk info: {:?}", info);
+
+// Resize disk
+QemuImage::resize("/var/lib/vm/disk.qcow2", "20G").await.unwrap();
+```
+
+## Security Considerations
+
+1. **Sandboxing**: Run VMs with minimal privileges
+2. **Network Isolation**: Use bridge or TAP networking for isolation
+3. **Resource Limits**: Set memory and CPU limits
+4. **Secure Boot**: Use UEFI with secure boot
 
 ## Troubleshooting
 
-### Common Issues
+### KVM Permission Denied
 
-1. **QEMU not found**
-   - Install: `sudo apt-get install qemu-system-x86`
+```bash
+sudo usermod -aG kvm $USER
+# Log out and log back in
+```
 
-2. **Kernel won't boot**
-   - Check serial output for errors
-   - Verify kernel binary is correct format
-   - Ensure GRUB configuration is correct
+### Hugepages Not Available
 
-3. **Network not working**
-   - Check QEMU user-mode networking
-   - Try: `-netdev user,id=net0 -device e1000,netdev=net0`
+```bash
+# Allocate hugepages
+echo 1024 | sudo tee /proc/sys/vm/nr_hugepages
 
-4. **VNC connection refused**
-   - Try different VNC port: `-vnc :1`
-   - Check firewall settings
+# Make persistent
+echo "vm.nr_hugepages = 1024" | sudo tee -a /etc/sysctl.conf
+```
 
-### Debug Tips
+### VM Fails to Start
 
-1. Enable verbose kernel output:
-   ```bash
-   QEMU_DEBUG=1 ./scripts/launch_vm.sh
-   ```
-
-2. Monitor QEMU log:
-   ```bash
-   tail -f vm/qemu.log
-   ```
-
-3. Use QEMU monitor:
-   ```bash
-   telnet localhost 4444
-   info registers
-   ```
-
----
+1. Check QEMU is installed: `qemu-system-x86_64 --version`
+2. Check KVM is available: `ls -la /dev/kvm`
+3. Check logs: `journalctl -xe`
 
 ## License
 

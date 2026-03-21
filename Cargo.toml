@@ -2,6 +2,7 @@
 resolver = "2"
 members = [
     "kernel",
+    "vm",
     "cells/memory_cell",
     "cells/processor_cell",
     "cells/io_cell",

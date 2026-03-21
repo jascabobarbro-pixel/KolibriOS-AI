@@ -1,0 +1,24 @@
+[package]
+name = "kolibrios-vm"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "KolibriOS AI Virtual Machine Module - QEMU Integration"
+
+[lib]
+name = "kolibrios_vm"
+path = "src/lib.rs"
+
+[dependencies]
+serde = { workspace = true, features = ["derive"] }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+tokio = { workspace = true, features = ["full"] }
+log = { workspace = true }
+once_cell = "1.19"
+which = "6.0"
+rand = "0.8"
+num_cpus = "1.16"
+
+[dev-dependencies]
+tokio-test = "0.4"
