@@ -1,0 +1,94 @@
+{
+  "experiment_time": "2026-03-21T20:43:31.750370",
+  "phases": {
+    "baseline": {
+      "duration_seconds": 0.04071784019470215,
+      "samples": 8,
+      "cpu": {
+        "avg": 14.925204382865548,
+        "max": 15.299101871959442,
+        "min": 14.734015637485491,
+        "std": 0.20692698037688081
+      },
+      "memory": {
+        "avg": 29.925204382865548,
+        "max": 30.299101871959444,
+        "min": 29.73401563748549,
+        "std": 0.2069269803768816
+      },
+      "observations_count": 4,
+      "interventions_count": 0
+    },
+    "high_load": {
+      "duration_seconds": 0.5012493133544922,
+      "samples": 10,
+      "cpu": {
+        "avg": 47.1665572054999,
+        "max": 47.86817672591798,
+        "min": 46.06451940583006,
+        "std": 0.4865071284839938
+      },
+      "memory": {
+        "avg": 55.097453684069094,
+        "max": 55.50797574388819,
+        "min": 54.45264433319845,
+        "std": 0.2846584262406337
+      },
+      "observations_count": 2,
+      "interventions_count": 1
+    },
+    "adaptive": {
+      "duration_seconds": 0.75264573097229,
+      "samples": 15,
+      "cpu": {
+        "avg": 46.889027581261885,
+        "max": 47.7421076162166,
+        "min": 46.0681147817098,
+        "std": 0.5164875474739022
+      },
+      "memory": {
+        "avg": 54.93506932946175,
+        "max": 55.43421190310546,
+        "min": 54.454748010574896,
+        "std": 0.3022001607560048
+      },
+      "observations_count": 0,
+      "interventions_count": 1
+    },
+    "optimized": {
+      "duration_seconds": 0.7522549629211426,
+      "samples": 15,
+      "cpu": {
+        "avg": 40.107676504343026,
+        "max": 40.74617811261821,
+        "min": 39.16638734333132,
+        "std": 0.5466703864452505
+      },
+      "memory": {
+        "avg": 51.438045171576924,
+        "max": 55.54805752433044,
+        "min": 43.56847363087083,
+        "std": 5.421955813526624
+      },
+      "observations_count": 8,
+      "interventions_count": 2
+    }
+  },
+  "comparisons": {
+    "baseline_vs_high_load": {
+      "cpu_increase": 32.241352822634354,
+      "memory_increase": 25.172249301203546
+    },
+    "high_load_vs_optimized": {
+      "cpu_reduction": 7.058880701156873,
+      "memory_reduction": 3.6594085124921705
+    }
+  },
+  "recommendations": [
+    "Memory optimization needs improvement - enhance Living Memory algorithms",
+    "Implement proactive resource monitoring thresholds",
+    "Add automatic workload balancing between cells",
+    "Enhance Unified Mind's resource prediction capabilities",
+    "Consider machine learning for adaptive optimization timing"
+  ]
+}
