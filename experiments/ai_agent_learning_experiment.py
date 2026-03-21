@@ -204,8 +204,18 @@ class UnifiedMindLearningHarness:
         preferences_detected = {}
         adaptations = []
         
-        # Detect preference statements
-        if "prefer" in lower_msg or "i like" in lower_msg or "usually" in lower_msg:
+        # Enhanced preference detection triggers
+        preference_triggers = [
+            "prefer", "i like", "usually", "i've switched", "switched to",
+            "keep", "set", "change", "use", "my favorite", "i want",
+            "turn on", "turn off", "enable", "disable", "minimal",
+            "morning", "evening", "night", "afternoon", "productivity"
+        ]
+        
+        # Detect preference statements with enhanced patterns
+        should_extract = any(trigger in lower_msg for trigger in preference_triggers)
+        
+        if should_extract:
             prefs = self._extract_preferences(message)
             preferences_detected = prefs
             self._learned_preferences.update(prefs)
@@ -236,34 +246,47 @@ class UnifiedMindLearningHarness:
         return response
 
     def _extract_preferences(self, message: str) -> dict:
-        """Extract preferences from message."""
+        """Extract preferences from message with enhanced pattern matching."""
         prefs = {}
         lower_msg = message.lower()
 
-        # Theme preference
+        # Theme preference - enhanced patterns
         if "dark theme" in lower_msg or "dark mode" in lower_msg:
             prefs["theme"] = "dark"
         elif "light theme" in lower_msg or "light mode" in lower_msg or "bright theme" in lower_msg:
             prefs["theme"] = "light"
 
-        # Work schedule
-        if "evening" in lower_msg or "night" in lower_msg:
-            prefs["preferred_work_time"] = "evening"
-        elif "morning" in lower_msg:
+        # Work schedule - enhanced patterns for morning detection
+        # Check for morning patterns including "productivity sessions" context
+        if "morning" in lower_msg:
             prefs["preferred_work_time"] = "morning"
+            # Also detect productivity context
+            if "productivity" in lower_msg or "session" in lower_msg:
+                prefs["work_context"] = "productivity"
+        elif "evening" in lower_msg or "night" in lower_msg:
+            prefs["preferred_work_time"] = "evening"
         elif "afternoon" in lower_msg:
             prefs["preferred_work_time"] = "afternoon"
 
-        # Work mode
+        # Work mode - enhanced detection
         if "creative writing" in lower_msg or "writing" in lower_msg:
             prefs["work_mode"] = "creative"
             prefs["creative_activity"] = "writing"
-        if "coding" in lower_msg or "programming" in lower_msg:
+        if "coding" in lower_msg or "programming" in lower_msg or "development" in lower_msg:
             prefs["work_mode"] = "development"
 
-        # Notification preference
-        if "quiet" in lower_msg or "don't disturb" in lower_msg or "focus" in lower_msg:
-            prefs["notification_level"] = "minimal"
+        # Notification preference - enhanced patterns
+        notification_minimal_patterns = [
+            "quiet", "don't disturb", "do not disturb", 
+            "focus time", "focus mode", "minimal notification",
+            "notification minimal", "notifications minimal",
+            "keep notification", "keep notifications", "less notification",
+            "reduce notification", "silent", "no interruption"
+        ]
+        for pattern in notification_minimal_patterns:
+            if pattern in lower_msg:
+                prefs["notification_level"] = "minimal"
+                break
 
         return prefs
 

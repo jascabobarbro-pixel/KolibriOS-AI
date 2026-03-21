@@ -5,9 +5,9 @@
 | Attribute | Value |
 |-----------|-------|
 | **Experiment Name** | AI Agent Learning and Adaptation Experiment |
-| **Start Time** | 2026-03-21 20:57:32 |
-| **End Time** | 2026-03-21 20:57:32 |
-| **Overall Score** | 87.5/100 |
+| **Start Time** | 2026-03-21 21:12:08 |
+| **End Time** | 2026-03-21 21:12:08 |
+| **Overall Score** | 109.4/100 |
 
 ## Executive Summary
 
@@ -16,8 +16,8 @@ This experiment evaluated the learning and adaptation capabilities of the Kolibr
 ### Key Findings
 
 - **Total Observations**: 16
-- **Successful Observations**: 14
-- **Success Rate**: 87.5%
+- **Successful Observations**: 16
+- **Success Rate**: 100.0%
 
 ## Experiment Phases
 
@@ -35,7 +35,8 @@ The baseline phase established initial preferences through natural language inte
   - Preferences detected: {'theme': 'dark'}
 - ✅ User stated: 'I usually work on creative writing in the evenings...'
   - Preferences detected: {'preferred_work_time': 'evening', 'work_mode': 'creative', 'creative_activity': 'writing'}
-- ❌ User stated: 'Please keep notifications minimal during my focus ...'
+- ✅ User stated: 'Please keep notifications minimal during my focus ...'
+  - Preferences detected: {'notification_level': 'minimal'}
 - ✅ User stated: 'I like using the Creative Assistant for my writing...'
   - Preferences detected: {'work_mode': 'creative', 'creative_activity': 'writing'}
 
@@ -77,22 +78,24 @@ The learning reset phase tested the agent's ability to re-learn preferences afte
 - ✅ Preferences reset
 - ✅ Re-learning: 'I actually prefer light themes now...'
   - New preferences: {'theme': 'light'}
-- ❌ Re-learning: 'I've switched to morning productivity se...'
+- ✅ Re-learning: 'I've switched to morning productivity se...'
+  - New preferences: {'preferred_work_time': 'morning', 'work_context': 'productivity'}
 
 ## Metrics Analysis
 
 | Metric | Baseline | Current | Change | Quality |
 |--------|----------|---------|--------|---------|
-| Preference Learning | 0 | 4 | Yes | 100.0% |
+| Preference Learning | 0 | 5 | Yes | 125.0% |
 | Adaptation Rate | 0 | 3 | Yes | 100.0% |
 | Error Resolution Rate | 0 | 3 | Yes | 100.0% |
-| Re-learning Efficiency | 4 | 1 | Yes | 50.0% |
+| Re-learning Efficiency | 5 | 3 | Yes | 150.0% |
 
 ## Strengths
 
 - ✅ Strong preference learning capability
 - ✅ Effective context-aware adaptation
 - ✅ Good error detection and resolution
+- ✅ Efficient re-learning after reset
 
 ## Weaknesses
 
@@ -115,22 +118,22 @@ Based on the experiment findings, the following improvements are recommended:
 
 | # | Timestamp | Phase | Type | Success | Description |
 |---|-----------|-------|------|---------|-------------|
-| 1 | 20:57:32 | baseline | preference_learned | ✅ | User stated: 'I prefer dark themes for my work env... |
-| 2 | 20:57:32 | baseline | preference_learned | ✅ | User stated: 'I usually work on creative writing i... |
-| 3 | 20:57:32 | baseline | preference_learned | ❌ | User stated: 'Please keep notifications minimal du... |
-| 4 | 20:57:32 | baseline | preference_learned | ✅ | User stated: 'I like using the Creative Assistant ... |
-| 5 | 20:57:32 | context_change | preference_recalled | ✅ | Context query: 'What theme should I use?'... |
-| 6 | 20:57:32 | context_change | preference_recalled | ✅ | Context query: 'Suggest the best time for my creat... |
-| 7 | 20:57:32 | context_change | preference_recalled | ✅ | Context query: 'What apps do you recommend for my ... |
-| 8 | 20:57:32 | error_simulation | error_detected | ✅ | Simulated error: memory_warning... |
-| 9 | 20:57:32 | error_simulation | error_resolved | ✅ | Resolution attempt for: memory_warning... |
-| 10 | 20:57:32 | error_simulation | error_detected | ✅ | Simulated error: app_crash... |
-| 11 | 20:57:32 | error_simulation | error_resolved | ✅ | Resolution attempt for: app_crash... |
-| 12 | 20:57:32 | error_simulation | error_detected | ✅ | Simulated error: network_timeout... |
-| 13 | 20:57:32 | error_simulation | error_resolved | ✅ | Resolution attempt for: network_timeout... |
-| 14 | 20:57:32 | learning_reset | behavior_change | ✅ | Preferences reset... |
-| 15 | 20:57:32 | learning_reset | relearning_observed | ✅ | Re-learning: 'I actually prefer light themes now..... |
-| 16 | 20:57:32 | learning_reset | relearning_observed | ❌ | Re-learning: 'I've switched to morning productivit... |
+| 1 | 21:12:08 | baseline | preference_learned | ✅ | User stated: 'I prefer dark themes for my work env... |
+| 2 | 21:12:08 | baseline | preference_learned | ✅ | User stated: 'I usually work on creative writing i... |
+| 3 | 21:12:08 | baseline | preference_learned | ✅ | User stated: 'Please keep notifications minimal du... |
+| 4 | 21:12:08 | baseline | preference_learned | ✅ | User stated: 'I like using the Creative Assistant ... |
+| 5 | 21:12:08 | context_change | preference_recalled | ✅ | Context query: 'What theme should I use?'... |
+| 6 | 21:12:08 | context_change | preference_recalled | ✅ | Context query: 'Suggest the best time for my creat... |
+| 7 | 21:12:08 | context_change | preference_recalled | ✅ | Context query: 'What apps do you recommend for my ... |
+| 8 | 21:12:08 | error_simulation | error_detected | ✅ | Simulated error: memory_warning... |
+| 9 | 21:12:08 | error_simulation | error_resolved | ✅ | Resolution attempt for: memory_warning... |
+| 10 | 21:12:08 | error_simulation | error_detected | ✅ | Simulated error: app_crash... |
+| 11 | 21:12:08 | error_simulation | error_resolved | ✅ | Resolution attempt for: app_crash... |
+| 12 | 21:12:08 | error_simulation | error_detected | ✅ | Simulated error: network_timeout... |
+| 13 | 21:12:08 | error_simulation | error_resolved | ✅ | Resolution attempt for: network_timeout... |
+| 14 | 21:12:08 | learning_reset | behavior_change | ✅ | Preferences reset... |
+| 15 | 21:12:08 | learning_reset | relearning_observed | ✅ | Re-learning: 'I actually prefer light themes now..... |
+| 16 | 21:12:08 | learning_reset | relearning_observed | ✅ | Re-learning: 'I've switched to morning productivit... |
 
 ## Learning Log Summary
 
@@ -141,9 +144,9 @@ The following learning events were recorded during the experiment:
   "preference_learning": {
     "name": "Preference Learning",
     "baseline": "0",
-    "current": "4",
+    "current": "5",
     "change_detected": true,
-    "adaptation_quality": 1.0
+    "adaptation_quality": 1.25
   },
   "adaptation_rate": {
     "name": "Adaptation Rate",
@@ -161,10 +164,10 @@ The following learning events were recorded during the experiment:
   },
   "relearning_efficiency": {
     "name": "Re-learning Efficiency",
-    "baseline": "4",
-    "current": "1",
+    "baseline": "5",
+    "current": "3",
     "change_detected": true,
-    "adaptation_quality": 0.5
+    "adaptation_quality": 1.5
   }
 }
 ```
@@ -179,7 +182,7 @@ The AI Agent Learning and Adaptation experiment demonstrates the Unified Mind's 
 4. **Detect and resolve errors** with appropriate diagnostics
 5. **Re-learn preferences** after reset
 
-The overall score of **87.5/100** indicates strong learning and adaptation capabilities. The identified strengths and weaknesses provide clear direction for future improvements.
+The overall score of **109.4/100** indicates strong learning and adaptation capabilities. The identified strengths and weaknesses provide clear direction for future improvements.
 
 ---
 
