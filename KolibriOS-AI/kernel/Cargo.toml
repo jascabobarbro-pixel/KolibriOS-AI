@@ -1,0 +1,33 @@
+[package]
+name = "kolibrios-kernel"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "KolibriOS AI Living Kernel"
+
+[lib]
+name = "kolibrios_kernel"
+path = "src/lib.rs"
+
+[dependencies]
+serde = { workspace = true, features = ["derive"] }
+thiserror = { workspace = true }
+log = { workspace = true }
+spin = "0.9"
+
+[target.'cfg(target_arch = "x86_64")'.dependencies]
+x86_64 = "0.14"
+uart_16550 = "0.3"
+
+[target.'cfg(target_arch = "aarch64")'.dependencies]
+aarch64 = "0.0.10"
+
+[features]
+default = []
+debug_assertions = []
+self_healing = []
+ai_integration = []
+neural_scheduler = []
+
+[dev-dependencies]
+proptest = { workspace = true }

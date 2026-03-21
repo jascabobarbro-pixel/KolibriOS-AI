@@ -1,0 +1,67 @@
+// KolibriOS AI - Cell Demo
+// Demonstrates the Living Cell Architecture
+
+// Define a self-healing memory cell
+cell SelfHealingMemory {
+    // Properties
+    let total_size: int = 1024 * 1024  // 1MB
+    let used_size: int = 0
+    let health: string = "healthy"
+    
+    // Allocate memory
+    behavior allocate(size: int) -> pointer {
+        if used_size + size > total_size {
+            // Trigger self-healing
+            self.heal();
+        }
+        
+        let ptr = internal_alloc(size);
+        used_size = used_size + size;
+        return ptr;
+    }
+    
+    // Free memory
+    behavior free(ptr: pointer) {
+        let size = get_size(ptr);
+        internal_free(ptr);
+        used_size = used_size - size;
+    }
+    
+    // Self-diagnosis
+    behavior diagnose() -> string {
+        if used_size > total_size * 0.9 {
+            return "high_utilization";
+        }
+        return "healthy";
+    }
+    
+    // Self-healing
+    behavior heal() {
+        let status = self.diagnose();
+        if status == "high_utilization" {
+            // Compact memory
+            compact();
+        }
+    }
+}
+
+// Define an AI-powered cell
+cell AiCell {
+    let model: string = "default"
+    let context: array = []
+    
+    behavior load_model(name: string) {
+        model = name;
+        initialize_model(model);
+    }
+    
+    behavior infer(input: string) -> string {
+        let response = model_inference(model, input);
+        return response;
+    }
+    
+    behavior learn(feedback: string) {
+        // Incorporate feedback for improvement
+        update_weights(feedback);
+    }
+}

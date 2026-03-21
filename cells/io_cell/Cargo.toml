@@ -1,0 +1,14 @@
+[package]
+name = "io_cell"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "I/O Cell - Intelligent I/O management for KolibriOS AI"
+
+[dependencies]
+serde = { workspace = true }
+thiserror = { workspace = true }
+log = { workspace = true }
+
+[features]
+default = []

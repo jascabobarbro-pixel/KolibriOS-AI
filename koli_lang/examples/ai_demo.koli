@@ -1,0 +1,68 @@
+// KolibriOS AI - AI Integration Demo
+// Demonstrates native AI constructs in Koli
+
+// Define an AI assistant
+ai CodeAssistant {
+    capability: code_completion
+    capability: code_explanation
+    capability: bug_detection
+}
+
+// Use AI for code assistance
+fn get_code_help(code: string) -> string {
+    let prompt = "Explain this code: " + code;
+    let explanation = ask CodeAssistant prompt;
+    return explanation;
+}
+
+// AI-powered file manager
+ai SmartFileManager {
+    capability: file_organization
+    capability: duplicate_detection
+    capability: smart_search
+}
+
+fn organize_files(directory: string) {
+    let files = list_files(directory);
+    let suggestions = ask SmartFileManager "Organize these files: " + files;
+    
+    for suggestion in suggestions {
+        move_file(suggestion.source, suggestion.destination);
+    }
+}
+
+// AI system monitoring
+ai SystemMonitor {
+    capability: anomaly_detection
+    capability: performance_prediction
+    capability: resource_optimization
+}
+
+fn monitor_system() {
+    let metrics = collect_metrics();
+    let analysis = ask SystemMonitor "Analyze: " + metrics;
+    
+    if analysis.has_anomaly {
+        alert(analysis.anomaly_type);
+    }
+    
+    if analysis.optimization_suggested {
+        apply_optimization(analysis.suggestion);
+    }
+}
+
+// Interactive AI shell
+fn ai_shell() {
+    print("KolibriOS AI Shell - Type 'exit' to quit");
+    
+    while true {
+        let input = read_line("> ");
+        
+        if input == "exit" {
+            break;
+        }
+        
+        let response = ask input;
+        print(response);
+    }
+}

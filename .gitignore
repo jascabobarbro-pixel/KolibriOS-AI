@@ -1,0 +1,82 @@
+# Build outputs
+/target/
+/build/
+/out/
+*.o
+*.obj
+*.elf
+*.bin
+*.iso
+
+# Rust
+Cargo.lock
+**/*.rs.bk
+*.pdb
+
+# C/C++
+*.a
+*.lib
+*.so
+*.dylib
+*.dll
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+
+# IDE and editors
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.cproject
+.settings/
+*.sublime-*
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Documentation
+docs/_build/
+site/
+
+# Testing
+/coverage/
+.nyc_output/
+*.lcov
+
+# QEMU
+*.qcow2
+*.img
+
+# Logs
+*.log
+logs/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# Package managers
+node_modules/
+.npm/
+.yarn/

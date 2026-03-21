@@ -1,0 +1,100 @@
+// Simple test file for Koli Language Lexer/Parser
+
+// Test 1: Basic function
+fn hello(name: string) -> string {
+    return "Hello, " + name + "!";
+}
+
+// Test 2: Arithmetic
+fn math_test() -> int {
+    let a = 10;
+    let b = 20;
+    let c = a + b * 2;  // Should be 50 (precedence)
+    return c;
+}
+
+// Test 3: Conditionals
+fn conditional_test(x: int) -> string {
+    if x > 0 {
+        return "positive";
+    } else if x < 0 {
+        return "negative";
+    } else {
+        return "zero";
+    }
+}
+
+// Test 4: Loops
+fn loop_test(n: int) -> int {
+    let sum = 0;
+    let i = 1;
+
+    while i <= n {
+        sum = sum + i;
+        i = i + 1;
+    }
+
+    return sum;
+}
+
+// Test 5: For loop
+fn for_test(items: array<int>) -> int {
+    let total = 0;
+
+    for item in items {
+        total = total + item;
+    }
+
+    return total;
+}
+
+// Test 6: Cell definition
+cell TestCell {
+    let value: int = 0
+
+    behavior get() -> int {
+        return value;
+    }
+
+    behavior set(new_value: int) {
+        value = new_value;
+    }
+
+    behavior increment() {
+        value = value + 1;
+    }
+}
+
+// Test 7: AI definition
+ai TestAI {
+    capability: chat
+    capability: analyze
+}
+
+// Test 8: Using AI
+fn ask_ai(question: string) -> string {
+    let response = ask TestAI question;
+    return response;
+}
+
+// Test 9: Array literals
+fn array_test() {
+    let empty = [];
+    let numbers = [1, 2, 3, 4, 5];
+    let strings = ["a", "b", "c"];
+}
+
+// Test 10: Complex expressions
+fn complex_test(a: int, b: int, c: int) -> bool {
+    let result = (a + b) * c > 100 && a < b || c == 0;
+    return result;
+}
+
+// Main
+fn main() {
+    hello("World");
+    math_test();
+    conditional_test(42);
+    loop_test(10);
+    ask_ai("What is the meaning of life?");
+}

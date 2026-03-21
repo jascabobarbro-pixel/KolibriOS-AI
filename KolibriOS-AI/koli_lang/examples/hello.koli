@@ -1,0 +1,32 @@
+// Hello World in Koli Language
+// KolibriOS AI - Native AI Programming
+
+fn main() {
+    let message = "Hello, KolibriOS AI!";
+    print(message);
+}
+
+// AI-powered function example
+ai Assistant {
+    capability: text_generation
+    model: "default"
+}
+
+// Using AI in Koli
+fn ask_ai() {
+    let response = ask "What is KolibriOS AI?";
+    print(response);
+}
+
+// Cell definition example
+cell MemoryManager {
+    behavior allocate(size: int) {
+        // Allocate memory
+        return allocate_internal(size);
+    }
+    
+    behavior free(ptr: pointer) {
+        // Free memory
+        free_internal(ptr);
+    }
+}

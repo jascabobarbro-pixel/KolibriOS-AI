@@ -1,0 +1,242 @@
+// KolibriOS AI - Comprehensive Koli Language Test
+// Tests all language features
+
+// ============================================================================
+// AI Definitions
+// ============================================================================
+
+// Simple AI assistant
+ai SimpleAssistant {
+    capability: chat
+    capability: reasoning
+}
+
+// AI with multiple capabilities
+ai CodeAssistant {
+    capability: code_completion
+    capability: code_explanation
+    capability: bug_detection
+    capability: refactoring
+}
+
+// ============================================================================
+// Cell Definitions
+// ============================================================================
+
+// Memory Cell with self-healing
+cell SelfHealingMemory {
+    // Properties (state)
+    let total_size: int = 1024 * 1024
+    let used_size: int = 0
+    let health: string = "healthy"
+
+    // Allocate memory
+    behavior allocate(size: int) -> pointer {
+        if used_size + size > total_size {
+            self.heal();
+        }
+
+        let ptr = internal_alloc(size);
+        used_size = used_size + size;
+        return ptr;
+    }
+
+    // Free memory
+    behavior free(ptr: pointer) {
+        let size = get_size(ptr);
+        internal_free(ptr);
+        used_size = used_size - size;
+    }
+
+    // Self-diagnosis
+    behavior diagnose() -> string {
+        if used_size > total_size * 0.9 {
+            return "high_utilization";
+        }
+        return "healthy";
+    }
+
+    // Self-healing
+    behavior heal() {
+        let status = self.diagnose();
+        if status == "high_utilization" {
+            compact();
+        }
+    }
+}
+
+// AI-powered processing cell
+cell AiProcessor {
+    let model: string = "default"
+    let context: array<string> = []
+    let status: string = "idle"
+
+    behavior load_model(name: string) {
+        model = name;
+        initialize_model(model);
+        status = "ready";
+    }
+
+    behavior infer(input: string) -> string {
+        let response = model_inference(model, input);
+        return response;
+    }
+
+    behavior learn(feedback: string) {
+        update_weights(feedback);
+    }
+}
+
+// ============================================================================
+// Functions
+// ============================================================================
+
+// Basic function with parameters
+fn add(a: int, b: int) -> int {
+    return a + b;
+}
+
+// Function with type inference
+fn multiply(a: int, b: int) -> int {
+    let result = a * b;
+    return result;
+}
+
+// Function with for loop
+fn sum_array(numbers: array<int>) -> int {
+    let total = 0;
+
+    for num in numbers {
+        total = total + num;
+    }
+
+    return total;
+}
+
+// Function with while loop
+fn count_down(n: int) -> int {
+    let count = n;
+
+    while count > 0 {
+        print(count);
+        count = count - 1;
+    }
+
+    return 0;
+}
+
+// Function with nested conditionals
+fn classify_number(n: int) -> string {
+    if n < 0 {
+        return "negative";
+    } else if n == 0 {
+        return "zero";
+    } else if n < 10 {
+        return "small";
+    } else if n < 100 {
+        return "medium";
+    } else {
+        return "large";
+    }
+}
+
+// ============================================================================
+// AI Integration
+// ============================================================================
+
+// Use AI for code assistance
+fn get_code_help(code: string) -> string {
+    let prompt = "Explain this code: " + code;
+    let explanation = ask CodeAssistant prompt;
+    return explanation;
+}
+
+// Interactive AI shell
+fn ai_shell() {
+    print("KolibriOS AI Shell - Type 'exit' to quit");
+
+    while true {
+        let input = read_line("> ");
+
+        if input == "exit" {
+            break;
+        }
+
+        let response = ask input;
+        print(response);
+    }
+}
+
+// System monitoring with AI
+fn monitor_system() {
+    let metrics = collect_metrics();
+    let analysis = ask CodeAssistant "Analyze system metrics: " + metrics;
+
+    if analysis.has_anomaly {
+        alert(analysis.anomaly_type);
+    }
+}
+
+// ============================================================================
+// Data Structures
+// ============================================================================
+
+// Working with arrays
+fn process_data() {
+    let numbers = [1, 2, 3, 4, 5];
+    let names = ["Alice", "Bob", "Charlie"];
+
+    for name in names {
+        print("Hello, " + name);
+    }
+}
+
+// Struct usage
+fn create_point(x: int, y: int) {
+    let point = { x: x, y: y };
+    return point;
+}
+
+// ============================================================================
+// Spawn Cells
+// ============================================================================
+
+fn initialize_cells() {
+    // Spawn a memory cell
+    let memory = spawn SelfHealingMemory();
+
+    // Allocate some memory
+    let ptr = memory.allocate(1024);
+
+    // Use the memory
+    // ...
+
+    // Free the memory
+    memory.free(ptr);
+}
+
+// ============================================================================
+// Main Entry Point
+// ============================================================================
+
+fn main() -> int {
+    print("KolibriOS AI - Koli Language Test");
+
+    // Test basic arithmetic
+    let result = add(5, 3);
+    print("5 + 3 = " + result);
+
+    // Test array operations
+    let numbers = [1, 2, 3, 4, 5];
+    let sum = sum_array(numbers);
+    print("Sum: " + sum);
+
+    // Test AI integration
+    let help = get_code_help("fn test() { return 42; }");
+    print("AI Help: " + help);
+
+    // Initialize cells
+    initialize_cells();
+
+    return 0;
+}

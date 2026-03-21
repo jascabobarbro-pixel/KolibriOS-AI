@@ -1,0 +1,152 @@
+syntax = "proto3";
+
+package kolibrios.cell.processor;
+
+import "cell_common.proto";
+
+// Processor Cell Service - Manages CPU cores and task execution
+
+// Task execution request
+message ExecuteTaskRequest {
+    string task_id = 1;
+    string executable_path = 2;
+    repeated string args = 3;
+    map<string, string> env = 4;
+    TaskPriority priority = 5;
+    uint32 cpu_core_mask = 6;          // Bitmask of allowed cores (0 = any)
+    uint64 memory_limit = 7;           // Memory limit in bytes
+    uint64 time_limit_ms = 8;          // Execution time limit
+}
+
+enum TaskPriority {
+    TASK_PRIORITY_UNSPECIFIED = 0;
+    TASK_PRIORITY_IDLE = 1;
+    TASK_PRIORITY_LOW = 2;
+    TASK_PRIORITY_NORMAL = 3;
+    TASK_PRIORITY_HIGH = 4;
+    TASK_PRIORITY_REALTIME = 5;
+}
+
+// Task execution response
+message ExecuteTaskResponse {
+    bool success = 1;
+    string task_id = 2;
+    int32 pid = 3;                     // Process ID if applicable
+    string error_message = 4;
+}
+
+// Task status
+message TaskStatus {
+    string task_id = 1;
+    TaskState state = 2;
+    int32 exit_code = 3;
+    uint64 user_time_ms = 4;           // User CPU time
+    uint64 system_time_ms = 5;         // System CPU time
+    uint64 memory_used = 6;            // Peak memory usage
+    int64 start_time = 7;
+    int64 end_time = 8;
+}
+
+enum TaskState {
+    TASK_STATE_UNSPECIFIED = 0;
+    TASK_STATE_PENDING = 1;
+    TASK_STATE_RUNNING = 2;
+    TASK_STATE_BLOCKED = 3;
+    TASK_STATE_COMPLETED = 4;
+    TASK_STATE_FAILED = 5;
+    TASK_STATE_CANCELLED = 6;
+}
+
+// CPU core information
+message CpuCore {
+    uint32 core_id = 1;
+    CpuCoreState state = 2;
+    double utilization_percent = 3;
+    uint64 frequency_mhz = 4;
+    uint32 temperature_celsius = 5;
+    repeated string running_tasks = 6;
+}
+
+enum CpuCoreState {
+    CPU_CORE_STATE_UNSPECIFIED = 0;
+    CPU_CORE_STATE_IDLE = 1;
+    CPU_CORE_STATE_ACTIVE = 2;
+    CPU_CORE_STATE_SLEEP = 3;
+    CPU_CORE_STATE_OFFLINE = 4;
+}
+
+// CPU statistics
+message CpuStats {
+    uint32 total_cores = 1;
+    uint32 active_cores = 2;
+    double total_utilization_percent = 3;
+    uint64 total_frequency_mhz = 4;
+    repeated CpuCore cores = 5;
+    uint32 running_tasks = 6;
+    uint32 pending_tasks = 7;
+    uint64 context_switches = 8;
+    uint64 interrupts = 9;
+}
+
+// Schedule task request
+message ScheduleTaskRequest {
+    string task_id = 1;
+    TaskPriority priority = 2;
+    uint32 core_affinity = 3;          // Preferred core
+    bool exclusive = 4;                // Exclusive core access
+}
+
+// Cancel task request
+message CancelTaskRequest {
+    string task_id = 1;
+    bool force = 2;                    // Force kill
+}
+
+// List tasks request
+message ListTasksRequest {
+    TaskState filter_state = 1;        // Filter by state, or UNSPECIFIED for all
+}
+
+// Processor Cell Service Definition
+service ProcessorCellService {
+    // Task execution
+    rpc ExecuteTask(ExecuteTaskRequest) returns (ExecuteTaskResponse);
+    rpc CancelTask(CancelTaskRequest) returns (kolibrios.cell.CommandResponse);
+    rpc GetTaskStatus(kolibrios.cell.Empty) returns (TaskStatus);
+    rpc ListTasks(ListTasksRequest) returns (stream TaskStatus);
+    
+    // Scheduling
+    rpc ScheduleTask(ScheduleTaskRequest) returns (kolibrios.cell.CommandResponse);
+    rpc SetPriority(ScheduleTaskRequest) returns (kolibrios.cell.CommandResponse);
+    
+    // Core management
+    rpc GetCoreInfo(kolibrios.cell.Empty) returns (stream CpuCore);
+    rpc SetCoreState(SetCoreStateRequest) returns (kolibrios.cell.CommandResponse);
+    rpc GetCpuStats(kolibrios.cell.Empty) returns (CpuStats);
+    
+    // Health and monitoring
+    rpc GetHeartbeat(kolibrios.cell.Empty) returns (kolibrios.cell.Heartbeat);
+    rpc GetMetrics(kolibrios.cell.Empty) returns (kolibrios.cell.Metrics);
+    rpc RunDiagnostics(kolibrios.cell.Empty) returns (DiagnosticsResult);
+}
+
+// Set core state request
+message SetCoreStateRequest {
+    uint32 core_id = 1;
+    CpuCoreState state = 2;
+}
+
+// Diagnostics result
+message DiagnosticsResult {
+    bool healthy = 1;
+    repeated DiagnosticIssue issues = 2;
+    repeated string recommendations = 3;
+}
+
+// Diagnostic issue
+message DiagnosticIssue {
+    string severity = 1;
+    string component = 2;
+    string description = 3;
+    string suggested_action = 4;
+}

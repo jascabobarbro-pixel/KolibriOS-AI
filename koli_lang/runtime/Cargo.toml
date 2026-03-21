@@ -1,0 +1,16 @@
+[package]
+name = "koli-runtime"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Koli Language Runtime - Execution environment for Koli programs"
+
+[dependencies]
+serde = { workspace = true }
+thiserror = { workspace = true }
+log = { workspace = true }
+tokio = { workspace = true, optional = true }
+
+[features]
+default = []
+async = ["tokio"]

@@ -1,0 +1,146 @@
+syntax = "proto3";
+
+package kolibrios.cell.memory;
+
+import "cell_common.proto";
+
+// Memory Cell Service - Manages memory allocation and monitoring
+
+// Memory allocation request
+message AllocateRequest {
+    uint64 size = 1;                    // Size in bytes
+    string pool_name = 2;               // Target memory pool
+    AllocationFlags flags = 3;          // Allocation flags
+    uint32 alignment = 4;               // Memory alignment (default: 8)
+    string requester_id = 5;            // ID of requesting cell/process
+}
+
+// Allocation flags
+message AllocationFlags {
+    bool zero_init = 1;                 // Zero-initialize memory
+    bool executable = 2;                // Executable memory
+    bool shared = 3;                    // Shared memory
+    bool huge_pages = 4;                // Use huge pages
+    bool pinned = 5;                    // Pin memory (no swap)
+}
+
+// Memory allocation response
+message AllocateResponse {
+    bool success = 1;
+    uint64 address = 2;                 // Allocated memory address
+    uint64 actual_size = 3;             // Actual allocated size (may be larger due to alignment)
+    string allocation_id = 4;           // Unique allocation identifier
+    string error_message = 5;
+}
+
+// Memory deallocation request
+message DeallocateRequest {
+    string allocation_id = 1;           // Allocation to free
+}
+
+// Memory statistics
+message MemoryStats {
+    uint64 total_memory = 1;            // Total managed memory
+    uint64 used_memory = 2;             // Currently used memory
+    uint64 available_memory = 3;        // Available memory
+    uint64 cached_memory = 4;           // Cached/buffered memory
+    uint64 shared_memory = 5;           // Shared memory in use
+    double utilization_percent = 6;     // Memory utilization (0-100)
+    uint32 allocation_count = 7;        // Number of active allocations
+    uint32 pool_count = 8;              // Number of memory pools
+    repeated PoolStats pools = 9;       // Per-pool statistics
+}
+
+// Pool statistics
+message PoolStats {
+    string name = 1;
+    uint64 total_size = 2;
+    uint64 used_size = 3;
+    uint32 allocation_count = 4;
+    double fragmentation_percent = 5;
+}
+
+// Memory pool definition
+message MemoryPool {
+    string name = 1;
+    uint64 size = 2;
+    PoolType pool_type = 3;
+    repeated string allowed_requesters = 4;  // Access control
+}
+
+enum PoolType {
+    POOL_TYPE_UNSPECIFIED = 0;
+    POOL_TYPE_KERNEL = 1;
+    POOL_TYPE_USER = 2;
+    POOL_TYPE_SHARED = 3;
+    POOL_TYPE_DEVICE = 4;
+    POOL_TYPE_AI = 5;
+}
+
+// Create pool request
+message CreatePoolRequest {
+    string name = 1;
+    uint64 size = 2;
+    PoolType pool_type = 3;
+}
+
+// Get allocation info request
+message GetAllocationRequest {
+    string allocation_id = 1;
+}
+
+// Allocation information
+message AllocationInfo {
+    string id = 1;
+    uint64 address = 2;
+    uint64 size = 3;
+    string pool_name = 4;
+    int64 timestamp = 5;               // Creation timestamp
+    string requester_id = 6;
+    AllocationFlags flags = 7;
+}
+
+// Defragmentation request
+message DefragmentRequest {
+    string pool_name = 1;              // Specific pool, or empty for all
+    bool aggressive = 2;               // Aggressive defragmentation
+}
+
+// Memory Cell Service Definition
+service MemoryCellService {
+    // Allocation operations
+    rpc Allocate(AllocateRequest) returns (AllocateResponse);
+    rpc Deallocate(DeallocateRequest) returns (kolibrios.cell.CommandResponse);
+    
+    // Pool management
+    rpc CreatePool(CreatePoolRequest) returns (kolibrios.cell.CommandResponse);
+    rpc DestroyPool(kolibrios.cell.Empty) returns (kolibrios.cell.CommandResponse);
+    
+    // Information retrieval
+    rpc GetStats(kolibrios.cell.Empty) returns (MemoryStats);
+    rpc GetAllocation(GetAllocationRequest) returns (AllocationInfo);
+    rpc ListPools(kolibrios.cell.Empty) returns (stream MemoryPool);
+    
+    // Maintenance operations
+    rpc Defragment(DefragmentRequest) returns (kolibrios.cell.CommandResponse);
+    rpc RunDiagnostics(kolibrios.cell.Empty) returns (DiagnosticsResult);
+    
+    // Health and monitoring
+    rpc GetHeartbeat(kolibrios.cell.Empty) returns (kolibrios.cell.Heartbeat);
+    rpc GetMetrics(kolibrios.cell.Empty) returns (kolibrios.cell.Metrics);
+}
+
+// Diagnostics result
+message DiagnosticsResult {
+    bool healthy = 1;
+    repeated DiagnosticIssue issues = 2;
+    repeated string recommendations = 3;
+}
+
+// Diagnostic issue
+message DiagnosticIssue {
+    string severity = 1;               // "info", "warning", "error", "critical"
+    string component = 2;
+    string description = 3;
+    string suggested_action = 4;
+}
