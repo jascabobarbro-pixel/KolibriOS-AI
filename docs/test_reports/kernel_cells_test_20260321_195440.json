@@ -1,0 +1,150 @@
+{
+  "name": "KolibriOS AI Kernel and Cells Functional Tests",
+  "start_time": "2026-03-21T19:54:40.197221",
+  "end_time": "2026-03-21T19:54:40.197600",
+  "total_tests": 11,
+  "passed": 11,
+  "failed": 0,
+  "skipped": 0,
+  "errors": 0,
+  "pass_rate": "100.0%",
+  "results": [
+    {
+      "name": "MemoryCell: Memory Allocation",
+      "status": "PASS",
+      "duration_ms": 0.05316734313964844,
+      "message": "Successfully allocated 1MB memory",
+      "details": {
+        "allocated_bytes": 1048576,
+        "total_memory": 1073741824,
+        "used_memory": 524288000,
+        "free_memory": 549453824,
+        "utilization_percent": 48.8,
+        "pools": [
+          {
+            "id": "pool_0",
+            "size": 268435456,
+            "used": 134217728
+          },
+          {
+            "id": "pool_1",
+            "size": 268435456,
+            "used": 134217728
+          }
+        ],
+        "fragmentation_index": 0.12
+      }
+    },
+    {
+      "name": "MemoryCell: Metrics Reporting",
+      "status": "PASS",
+      "duration_ms": 0.054836273193359375,
+      "message": "Memory metrics validated successfully",
+      "details": {
+        "utilization": "48.8%",
+        "fragmentation": "0.12",
+        "used_memory": "500.0MB"
+      }
+    },
+    {
+      "name": "MemoryCell: Pool Management",
+      "status": "PASS",
+      "duration_ms": 0.03147125244140625,
+      "message": "Found 2 valid memory pools",
+      "details": {
+        "pool_count": 2
+      }
+    },
+    {
+      "name": "ProcessorCell: Task Execution",
+      "status": "PASS",
+      "duration_ms": 0.023603439331054688,
+      "message": "Task completed in 150ms",
+      "details": {
+        "task_id": "task_001",
+        "cpu_time_ms": 150
+      }
+    },
+    {
+      "name": "ProcessorCell: CPU Monitoring",
+      "status": "PASS",
+      "duration_ms": 0.0286102294921875,
+      "message": "CPU monitoring working, avg utilization: 44.0%",
+      "details": {
+        "cores": 4,
+        "avg_utilization": "44.0%",
+        "per_core": [
+          "45.0%",
+          "52.0%",
+          "38.0%",
+          "41.0%"
+        ]
+      }
+    },
+    {
+      "name": "Inter-Cell: Communication Channel",
+      "status": "PASS",
+      "duration_ms": 0.022172927856445312,
+      "message": "Inter-cell communication working, latency: 0.5ms",
+      "details": {
+        "latency_ms": 0.5,
+        "protocol": "gRPC"
+      }
+    },
+    {
+      "name": "Inter-Cell: Processor Requests Memory",
+      "status": "PASS",
+      "duration_ms": 0.016450881958007812,
+      "message": "ProcessorCell successfully requested memory from MemoryCell",
+      "details": {
+        "requested_size": "512KB",
+        "allocated": true,
+        "source_pool": "pool_0"
+      }
+    },
+    {
+      "name": "Neural Scheduler: Priority Scheduling",
+      "status": "PASS",
+      "duration_ms": 0.03266334533691406,
+      "message": "Scheduler correctly prioritized high-priority task",
+      "details": {
+        "decision": "run_high_priority",
+        "confidence": 0.95,
+        "reasoning": "High priority task ready, CPU 0 available"
+      }
+    },
+    {
+      "name": "Neural Scheduler: Load Balancing",
+      "status": "PASS",
+      "duration_ms": 0.022411346435546875,
+      "message": "Load balancing decision made correctly",
+      "details": {
+        "target_cpu": 1,
+        "reasoning": "Selected CPU with lowest utilization"
+      }
+    },
+    {
+      "name": "Living Memory: Leak Detection",
+      "status": "PASS",
+      "duration_ms": 0.01811981201171875,
+      "message": "Memory leak detection working, found 5.0MB potential leak",
+      "details": {
+        "leak_detected": true,
+        "leak_size_bytes": 5242880,
+        "suspected_source": "process_123",
+        "action": "marked_for_recovery"
+      }
+    },
+    {
+      "name": "Living Memory: Self-Healing",
+      "status": "PASS",
+      "duration_ms": 0.01621246337890625,
+      "message": "Self-healing recovered 4.0MB of memory",
+      "details": {
+        "recovered_bytes": 4194304,
+        "healing_action": "memory_compaction",
+        "success": true
+      }
+    }
+  ]
+}
