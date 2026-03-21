@@ -1,0 +1,65 @@
+{
+  "test_name": "Unified Mind Natural Language Query Test",
+  "timestamp": "2026-03-21T21:34:12.593469",
+  "query": "What is the current system status and suggest an optimization?",
+  "success": true,
+  "evaluation": {
+    "intent_detected": true,
+    "status_reported": true,
+    "optimization_suggested": true,
+    "quality_acceptable": true,
+    "confidence_high": true
+  },
+  "response": {
+    "content": "## System Status Report\n\n**Health**: HEALTHY \u2705\n\n### Memory\n- Total: 16.0 GB\n- Used: 7.0 GB (43.6%)\n- Available: 9.0 GB\n\n### CPU\n- Cores: 6/8 active\n- Utilization: 39.2%\n\n### Tasks\n- Running: 30\n- Pending: 3\n\n## Optimization Recommendations\n\n### Suggested Actions\n1. **Run System Cleanup**: Remove temporary files and caches\n2. **Optimize Task Scheduling**: Balance workloads across cores\n3. **Enable Gaming Mode**: If you're planning high-performance tasks",
+    "intents_detected": [
+      {
+        "primary_intent": "system_status",
+        "secondary_intents": [
+          "optimization"
+        ],
+        "confidence": 1.0,
+        "keywords_detected": [
+          "status",
+          "system",
+          "current"
+        ]
+      },
+      {
+        "primary_intent": "optimization",
+        "secondary_intents": [],
+        "confidence": 1.0,
+        "keywords_detected": [
+          "optimization",
+          "suggest"
+        ]
+      }
+    ],
+    "confidence": 1.0,
+    "response_time_ms": 0.04220008850097656,
+    "quality": "excellent",
+    "suggestions": [
+      "Enable auto-optimization for maintenance"
+    ],
+    "actions_taken": [
+      "auto_optimization"
+    ],
+    "system_metrics": {
+      "memory": {
+        "total_gb": 16.0,
+        "used_gb": 6.969957516528666,
+        "utilization_percent": 43.56223447863232
+      },
+      "cpu": {
+        "total_cores": 8,
+        "active_cores": 6,
+        "utilization_percent": 39.19153659870661
+      },
+      "tasks": {
+        "running": 30,
+        "pending": 3
+      },
+      "health": "healthy"
+    }
+  }
+}
