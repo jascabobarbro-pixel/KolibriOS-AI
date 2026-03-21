@@ -1,0 +1,52 @@
+[package]
+name = "adaptive-file-manager"
+version = "0.1.0"
+edition = "2021"
+description = "Adaptive File Manager - A living application that suggests files and optimizes storage"
+authors = ["KolibriOS AI Team"]
+
+[dependencies]
+# Async runtime
+tokio = { version = "1.0", features = ["full"] }
+
+# File system
+walkdir = "2.5"
+notify = "6.1"
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# gRPC
+tonic = "0.12"
+prost = "0.13"
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = "0.3"
+
+# Time
+chrono = { version = "0.4", features = ["serde"] }
+
+# UUID for unique IDs
+uuid = { version = "1.0", features = ["v4", "serde"] }
+
+# Hashing for file signatures
+blake3 = "1.5"
+
+# Regex for pattern matching
+regex = "1.10"
+
+# Local dependencies
+kolibri-protocols = { path = "../../cells/protocols" }
+
+[build-dependencies]
+tonic-build = "0.12"
+
+[[bin]]
+name = "file-manager"
+path = "src/main.rs"
+
+[lib]
+name = "adaptive_file_manager"
+path = "src/lib.rs"

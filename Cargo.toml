@@ -11,7 +11,23 @@ members = [
     "koli_lang/compiler",
     "koli_lang/runtime",
     "unified_ai_agent/core",
+    "apps/gui",
+    "apps/file_manager",
+    "apps/creative_assistant",
 ]
+
+# Benchmark targets
+[[bench]]
+name = "kernel_bench"
+harness = false
+
+[[bench]]
+name = "memory_cell_bench"
+harness = false
+
+[[bench]]
+name = "koli_lang_bench"
+harness = false
 
 [workspace.package]
 version = "0.1.0"

@@ -1,43 +1,63 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+.eggs/
+*.egg-info/
+*.egg
+.venv/
+venv/
+ENV/
+env/
+
 # Build outputs
-/target/
-/build/
-/out/
+target/
+build/
+dist/
 *.o
-*.obj
-*.elf
-*.bin
-*.iso
-
-# Rust
-Cargo.lock
-**/*.rs.bk
-*.pdb
-
-# C/C++
 *.a
 *.lib
-*.so
-*.dylib
 *.dll
 *.exe
 *.out
 *.app
-*.i*86
-*.x86_64
-*.hex
+*.so
+*.dylib
+*.wasm
 
-# IDE and editors
+# IDE
 .idea/
 .vscode/
 *.swp
 *.swo
 *~
 .project
-.cproject
+.pydevproject
 .settings/
-*.sublime-*
 
-# OS files
+# Testing
+.coverage
+.pytest_cache/
+htmlcov/
+.tox/
+.nox/
+coverage_report/
+*.cover
+*.log
+
+# Rust
+Cargo.lock
+**/*.rs.bk
+
+# Node
+package-lock.json
+yarn.lock
+
+# OS
 .DS_Store
 .DS_Store?
 ._*
@@ -46,37 +66,39 @@ Cargo.lock
 ehthumbs.db
 Thumbs.db
 
-# Documentation
-docs/_build/
-site/
-
-# Testing
-/coverage/
-.nyc_output/
-*.lcov
-
-# QEMU
-*.qcow2
-*.img
-
-# Logs
-*.log
-logs/
-
 # Environment
 .env
 .env.local
 .env.*.local
+*.env
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Documentation
+site/
+
+# Cache
+.cache/
+.parcel-cache/
+
+# Skills (not part of the main project)
+skills/
+
+# Download directory
+download/
 
 # Temporary files
 tmp/
 temp/
 *.tmp
 *.temp
-*.bak
-*.backup
 
-# Package managers
-node_modules/
-.npm/
-.yarn/
+# Generated protobuf
+*_pb2.py
+*_pb2_grpc.py
+*_pb2.pyi

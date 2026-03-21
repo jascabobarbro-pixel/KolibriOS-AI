@@ -15,6 +15,9 @@ thiserror = { workspace = true }
 log = { workspace = true }
 spin = "0.9"
 
+# Security subsystem dependencies
+# Note: Using alloc for collections in no_std environment
+
 [target.'cfg(target_arch = "x86_64")'.dependencies]
 x86_64 = "0.14"
 uart_16550 = "0.3"
@@ -28,6 +31,7 @@ debug_assertions = []
 self_healing = []
 ai_integration = []
 neural_scheduler = []
+security_audit = []  # Enable detailed security audit logging
 
 [dev-dependencies]
 proptest = { workspace = true }

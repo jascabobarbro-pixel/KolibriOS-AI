@@ -1,0 +1,53 @@
+[package]
+name = "kolibri-gui"
+version = "0.1.0"
+edition = "2021"
+description = "KolibriOS AI Adaptive GUI Framework"
+authors = ["KolibriOS AI Team"]
+
+[dependencies]
+# Iced GUI framework
+iced = { version = "0.12", features = ["tokio", "svg", "image", "advanced"] }
+iced_wgpu = "0.12"
+iced_winit = "0.12"
+
+# Async runtime
+tokio = { version = "1.0", features = ["full"] }
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# gRPC for Unified Mind integration
+tonic = "0.12"
+prost = "0.13"
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = "0.3"
+
+# System info for adaptive UI
+sysinfo = "0.31"
+
+# Time
+chrono = { version = "0.4", features = ["serde"] }
+
+# Random for animations
+rand = "0.8"
+
+# Image processing
+image = "0.25"
+
+# Local dependencies
+kolibri-protocols = { path = "../../cells/protocols" }
+
+[build-dependencies]
+tonic-build = "0.12"
+
+[[bin]]
+name = "kolibri-gui"
+path = "src/main.rs"
+
+[lib]
+name = "kolibri_gui"
+path = "src/lib.rs"
