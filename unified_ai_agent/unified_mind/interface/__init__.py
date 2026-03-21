@@ -5,6 +5,10 @@ Provides user interfaces for interacting with the Unified Mind AI agent.
 """
 
 from .cli import CLIInterface
-from .web import WebInterface
+
+try:
+    from .web import WebInterface
+except ImportError:  # Optional interface module
+    WebInterface = None
 
 __all__ = ["CLIInterface", "WebInterface"]

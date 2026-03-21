@@ -1,4 +1,4 @@
-"""Lightweight pytest helpers for environments without pytest-asyncio."""
+"""Pytest helpers local to the Unified Mind test suite."""
 
 from __future__ import annotations
 
@@ -7,7 +7,7 @@ import inspect
 
 
 def pytest_configure(config) -> None:
-    """Register custom markers used across the repository."""
+    """Register async markers used by the local suite."""
     config.addinivalue_line(
         "markers",
         "asyncio: run the marked test function inside an asyncio event loop",
@@ -15,7 +15,7 @@ def pytest_configure(config) -> None:
 
 
 def pytest_pyfunc_call(pyfuncitem):
-    """Execute async test functions without requiring pytest-asyncio."""
+    """Run async test functions without depending on pytest-asyncio."""
     test_function = pyfuncitem.obj
     if not inspect.iscoroutinefunction(test_function):
         return None

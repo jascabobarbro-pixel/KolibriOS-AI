@@ -124,11 +124,10 @@ module = [
 ignore_missing_imports = true
 
 [tool.pytest.ini_options]
-asyncio_mode = "auto"
 testpaths = ["tests"]
 python_files = ["test_*.py", "*_test.py"]
 python_functions = ["test_*"]
-addopts = "-v --cov=unified_mind --cov-report=term-missing --cov-report=html"
+addopts = "-v"
 
 [tool.coverage.run]
 source = ["unified_mind"]
