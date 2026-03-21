@@ -1,0 +1,146 @@
+{
+  "name": "KolibriOS AI Unified Mind Functional Tests",
+  "start_time": "2026-03-21T20:06:34.736514",
+  "end_time": "2026-03-21T20:06:34.737026",
+  "total_tests": 13,
+  "passed": 12,
+  "failed": 1,
+  "skipped": 0,
+  "errors": 0,
+  "pass_rate": "92.3%",
+  "results": [
+    {
+      "name": "NL Interaction: Show Memory Usage",
+      "status": "PASS",
+      "duration_ms": 0.07748603820800781,
+      "message": "Memory usage displayed correctly",
+      "details": {
+        "response_preview": "Memory Usage:\n  Total: 16.00 GB\n  Used: 8.00 GB\n  Utilization: 50.0%"
+      }
+    },
+    {
+      "name": "NL Interaction: CPU Load Query",
+      "status": "PASS",
+      "duration_ms": 0.05173683166503906,
+      "message": "CPU load displayed correctly",
+      "details": {
+        "response_preview": "CPU Status:\n  Total Cores: 8\n  Active Cores: 4\n  Utilization: 45.0%"
+      }
+    },
+    {
+      "name": "NL Interaction: Optimize for Gaming",
+      "status": "PASS",
+      "duration_ms": 0.03933906555175781,
+      "message": "Gaming optimization executed correctly",
+      "details": {
+        "action_taken": "gaming_mode_enabled",
+        "response_preview": "Enabling Gaming Mode:\n- Prioritizing graphics processes\n- Disabling background services\n- Optimizing"
+      }
+    },
+    {
+      "name": "NL Interaction: Launch File Manager",
+      "status": "PASS",
+      "duration_ms": 0.030517578125,
+      "message": "File Manager launch successful",
+      "details": {
+        "action_taken": "app_launched:file_manager",
+        "context_provided": true
+      }
+    },
+    {
+      "name": "NL Interaction: Create Document",
+      "status": "FAIL",
+      "duration_ms": 0.02956390380859375,
+      "message": "Document creation not addressed",
+      "details": {
+        "content": "AI, or Artificial Intelligence, refers to computer systems designed to perform tasks that typically require human intelligence. In KolibriOS AI, I'm an integrated AI assistant that helps manage and optimize your system.",
+        "intent_detected": null,
+        "action_taken": null,
+        "sources": [
+          "gemini"
+        ],
+        "confidence": 0.95
+      }
+    },
+    {
+      "name": "LLM Integration: Gemini API",
+      "status": "PASS",
+      "duration_ms": 0.026702880859375,
+      "message": "Complex query processed via LLM",
+      "details": {
+        "response_length": 219,
+        "sources": [
+          "gemini"
+        ]
+      }
+    },
+    {
+      "name": "LLM Integration: Complex Query",
+      "status": "PASS",
+      "duration_ms": 0.024318695068359375,
+      "message": "Complex query processed successfully",
+      "details": {
+        "response_preview": "I understand you're asking about 'Based on current system metrics, what would you re...'. Let me hel",
+        "confidence": 0.95
+      }
+    },
+    {
+      "name": "Local Llama: Simple Query",
+      "status": "PASS",
+      "duration_ms": 0.02384185791015625,
+      "message": "Local processing successful",
+      "details": {
+        "response_preview": "System Status Report\n========================================\nHealth: HEALTHY\nMemory: 50.0% used\nCPU"
+      }
+    },
+    {
+      "name": "Local Llama: Offline Query",
+      "status": "PASS",
+      "duration_ms": 0.0247955322265625,
+      "message": "Offline query handled correctly",
+      "details": {
+        "intent_detected": "help"
+      }
+    },
+    {
+      "name": "Contextual Adaptation: Low Resources",
+      "status": "PASS",
+      "duration_ms": 0.027418136596679688,
+      "message": "Contextual adaptation working - optimization suggested",
+      "details": {
+        "system_health_during_test": "WARNING",
+        "action_taken": null
+      }
+    },
+    {
+      "name": "Contextual Adaptation: Resource-Intensive Task",
+      "status": "PASS",
+      "duration_ms": 0.022649765014648438,
+      "message": "Resource-intensive task handled gracefully",
+      "details": {
+        "response_preview": "I understand you're asking about 'run a full system analysis and report...'. Let me help you with th"
+      }
+    },
+    {
+      "name": "Living Apps: File Manager Integration",
+      "status": "PASS",
+      "duration_ms": 0.024557113647460938,
+      "message": "File Manager integration working",
+      "details": {
+        "launched": true,
+        "contextual_info_provided": true,
+        "action_taken": "app_launched:file_manager"
+      }
+    },
+    {
+      "name": "Living Apps: Creative Assistant Integration",
+      "status": "PASS",
+      "duration_ms": 0.022172927856445312,
+      "message": "Creative Assistant integration working",
+      "details": {
+        "response_preview": "I understand you're asking about 'I need to write a blog post about machine learning...'. Let me help you with that. Based on the current system state",
+        "relevant_response": true
+      }
+    }
+  ]
+}
