@@ -126,9 +126,9 @@ class UnifiedMind:
 
         # Close communication channels
         if self._cnd_channel:
-            self._cnd_channel.close()
+            await self._cnd_channel.close()
         if self._kernel_channel:
-            self._kernel_channel.close()
+            await self._kernel_channel.close()
 
         logger.info("Unified Mind stopped")
 

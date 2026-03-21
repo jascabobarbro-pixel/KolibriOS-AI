@@ -88,7 +88,7 @@ class MockLLMClient:
     
     async def generate_stream(self, prompt: str):
         """Stream response."""
-        words = self.generate(prompt).split()
+        words = (await self.generate(prompt)).split()
         for word in words:
             yield word + " "
             await asyncio.sleep(0.01)
@@ -162,7 +162,7 @@ class MockUnifiedMind:
         lower = user_input.lower().strip()
         
         command_patterns = {
-            "show": ["show ", "display ", "what is ", "how much "],
+            "show": ["show ", "display "],
             "status": ["status", "health", "state"],
             "optimize": ["optimize ", "tune ", "improve "],
             "help": ["help", "what can you do"],
@@ -277,6 +277,7 @@ Conversation:
     async def _cmd_clear(self, user_input: str) -> MindResponse:
         """Handle clear command."""
         self.conversation.clear()
+        self.conversation.append(ConversationTurn(role="user", content=user_input))
         return MindResponse(content="Conversation cleared.", intent_detected="clear")
     
     def _get_system_summary(self) -> str:

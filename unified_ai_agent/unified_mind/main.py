@@ -50,7 +50,7 @@ def load_config_from_env() -> UnifiedMindConfig:
     return config
 
 
-async def run_interactive(config: UnifiedMindConfig) None:
+async def run_interactive(config: UnifiedMindConfig) -> None:
     """Run in interactive CLI mode."""
     mind = UnifiedMind(config)
     

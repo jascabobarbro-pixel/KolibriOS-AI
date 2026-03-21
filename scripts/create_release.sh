@@ -18,7 +18,7 @@ NC='\033[0m'
 VERSION="0.7.0"
 VERSION_NAME="Living Memory"
 REPO="jascabobarbro-pixel/KolibriOS-AI"
-TOKEN="${GITHUB_TOKEN:-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}"
+TOKEN="${GITHUB_TOKEN:-}"
 DIST_DIR="dist"
 
 echo -e "${BLUE}========================================${NC}"
@@ -51,6 +51,11 @@ create_artifacts() {
 # Create GitHub release
 create_release() {
     echo -e "${YELLOW}[RELEASE] Creating GitHub release...${NC}"
+
+    if [ -z "${TOKEN}" ]; then
+        echo "GITHUB_TOKEN is required to create a GitHub release." >&2
+        exit 1
+    fi
     
     # Read release notes
     RELEASE_NOTES=$(cat RELEASE_NOTES.md)

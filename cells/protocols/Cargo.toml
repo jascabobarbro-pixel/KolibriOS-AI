@@ -1,0 +1,10 @@
+[package]
+name = "kolibri-protocols"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Shared protocol types for KolibriOS AI applications"
+
+[lib]
+name = "kolibri_protocols"
+path = "src/lib.rs"
