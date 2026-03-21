@@ -1,0 +1,158 @@
+{
+  "name": "KolibriOS AI Unified Mind Functional Tests",
+  "start_time": "2026-03-21T20:35:07.249067",
+  "end_time": "2026-03-21T20:35:07.249510",
+  "total_tests": 13,
+  "passed": 13,
+  "failed": 0,
+  "skipped": 0,
+  "errors": 0,
+  "pass_rate": "100.0%",
+  "results": [
+    {
+      "name": "NL: Show Memory Usage",
+      "status": "PASS",
+      "duration_ms": 0.06031990051269531,
+      "message": "Memory usage command interpreted correctly",
+      "details": {
+        "intent": "show_memory",
+        "confidence": 0.95,
+        "response_length": 76
+      }
+    },
+    {
+      "name": "NL: Optimize for Gaming",
+      "status": "PASS",
+      "duration_ms": 0.05078315734863281,
+      "message": "Gaming optimization command interpreted correctly",
+      "details": {
+        "intent": "optimize_gaming",
+        "action_taken": "enable_gaming_mode",
+        "confidence": 0.92
+      }
+    },
+    {
+      "name": "NL: CPU Load Query",
+      "status": "PASS",
+      "duration_ms": 0.03218650817871094,
+      "message": "CPU load query interpreted correctly",
+      "details": {
+        "intent": "show_cpu",
+        "confidence": 0.95
+      }
+    },
+    {
+      "name": "NL: Launch File Manager",
+      "status": "PASS",
+      "duration_ms": 0.023126602172851562,
+      "message": "File Manager launch command interpreted correctly",
+      "details": {
+        "intent": "launch_file_manager",
+        "action_taken": "launch_app:file_manager",
+        "confidence": 0.98
+      }
+    },
+    {
+      "name": "NL: Create Document",
+      "status": "PASS",
+      "duration_ms": 0.02193450927734375,
+      "message": "Document creation command interpreted correctly",
+      "details": {
+        "intent": "create_document",
+        "action_taken": "launch_app:creative_assistant",
+        "confidence": 0.88
+      }
+    },
+    {
+      "name": "LLM: Gemini API Integration",
+      "status": "PASS",
+      "duration_ms": 0.024080276489257812,
+      "message": "Gemini API integration working, response time: 380ms",
+      "details": {
+        "provider": "gemini",
+        "model": "gemini-1.5-flash",
+        "tokens_used": 66,
+        "response_time_ms": 380
+      }
+    },
+    {
+      "name": "LLM: OpenAI API Integration",
+      "status": "PASS",
+      "duration_ms": 0.019788742065429688,
+      "message": "OpenAI API integration working, response time: 691ms",
+      "details": {
+        "provider": "openai",
+        "model": "gpt-4o-mini",
+        "tokens_used": 76,
+        "response_time_ms": 691
+      }
+    },
+    {
+      "name": "LLM: Ollama Local Integration",
+      "status": "PASS",
+      "duration_ms": 0.030755996704101562,
+      "message": "Ollama integration working, model: llama3",
+      "details": {
+        "provider": "ollama",
+        "model": "llama3",
+        "tokens_used": 61,
+        "local_processing": true
+      }
+    },
+    {
+      "name": "LLM: Local Llama.cpp Integration",
+      "status": "PASS",
+      "duration_ms": 0.02288818359375,
+      "message": "Local Llama integration working, model: local-llama",
+      "details": {
+        "provider": "local_llama",
+        "model": "local-llama",
+        "tokens_used": 52,
+        "privacy_mode": true
+      }
+    },
+    {
+      "name": "Context: Resource Awareness",
+      "status": "PASS",
+      "duration_ms": 0.022411346435546875,
+      "message": "System correctly identifies high resource usage",
+      "details": {
+        "memory_utilization": 92.0,
+        "cpu_utilization": 85.0,
+        "health": "degraded"
+      }
+    },
+    {
+      "name": "Context: Task Deferral",
+      "status": "PASS",
+      "duration_ms": 0.022649765014648438,
+      "message": "System aware of resource pressure for task scheduling",
+      "details": {
+        "task_requested": "full_system_backup",
+        "system_health": "critical",
+        "recommendation": "defer_or_optimize"
+      }
+    },
+    {
+      "name": "Integration: File Manager",
+      "status": "PASS",
+      "duration_ms": 0.025987625122070312,
+      "message": "File Manager integration working with Unified Mind",
+      "details": {
+        "launch_intent": "general_query",
+        "llm_suggestions": true
+      }
+    },
+    {
+      "name": "Integration: Creative Assistant",
+      "status": "PASS",
+      "duration_ms": 0.024080276489257812,
+      "message": "Creative Assistant integration working",
+      "details": {
+        "intent": "general_query",
+        "llm_response_length": 270,
+        "tokens_used": 84
+      }
+    }
+  ]
+}

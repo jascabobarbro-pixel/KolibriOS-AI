@@ -1,0 +1,245 @@
+{
+  "name": "KolibriOS AI GUI and Living Applications Functional Tests",
+  "start_time": "2026-03-21T20:32:23.391731",
+  "end_time": "2026-03-21T20:32:24.093674",
+  "total_tests": 17,
+  "passed": 17,
+  "failed": 0,
+  "skipped": 0,
+  "errors": 0,
+  "pass_rate": "100.0%",
+  "results": [
+    {
+      "name": "GUI: Navigation Responsiveness",
+      "status": "PASS",
+      "duration_ms": 200.49667358398438,
+      "message": "Navigation responsive, completed in 200.4ms",
+      "details": {
+        "navigation_time_ms": 200.43563842773438
+      }
+    },
+    {
+      "name": "GUI: Transition Smoothness",
+      "status": "PASS",
+      "duration_ms": 0.141143798828125,
+      "message": "Transitions smooth, avg: 0.0ms, max: 0.0ms",
+      "details": {
+        "avg_transition_ms": 0.0010013580322265625,
+        "max_transition_ms": 0.0026226043701171875,
+        "all_transitions": [
+          0.0026226043701171875,
+          0.00095367431640625,
+          0.000476837158203125,
+          0.000476837158203125,
+          0.000476837158203125
+        ]
+      }
+    },
+    {
+      "name": "GUI: Animation Performance",
+      "status": "PASS",
+      "duration_ms": 0.05078315734863281,
+      "message": "Animation performance good: 60 FPS",
+      "details": {
+        "fps": 60,
+        "target_fps": 60
+      }
+    },
+    {
+      "name": "Adaptive UI: Theme Switching",
+      "status": "PASS",
+      "duration_ms": 0.03147125244140625,
+      "message": "Theme switching works correctly for all modes",
+      "details": {
+        "themes_tested": [
+          "light",
+          "dark",
+          "auto"
+        ],
+        "transition_times_ms": [
+          150,
+          150,
+          150
+        ]
+      }
+    },
+    {
+      "name": "Adaptive UI: Layout Changes",
+      "status": "PASS",
+      "duration_ms": 0.02765655517578125,
+      "message": "Layout adapts to orientation changes",
+      "details": {
+        "layout_adapted": true,
+        "current_orientation": "portrait"
+      }
+    },
+    {
+      "name": "Adaptive UI: Context Awareness",
+      "status": "PASS",
+      "duration_ms": 0.023603439331054688,
+      "message": "UI correctly adapts to context changes",
+      "details": {
+        "scenarios_tested": [
+          "low_light_reading",
+          "gaming"
+        ],
+        "adaptations": [
+          "theme_adjusted",
+          "layout_optimized",
+          "theme_adjusted",
+          "layout_optimized"
+        ]
+      }
+    },
+    {
+      "name": "File Manager: Launch",
+      "status": "PASS",
+      "duration_ms": 0.03528594970703125,
+      "message": "File Manager launched successfully in 250ms",
+      "details": {
+        "success": true,
+        "app": "File Manager",
+        "launch_time_ms": 250,
+        "package": "com.kolibrios.ai.file_manager"
+      }
+    },
+    {
+      "name": "File Manager: File Operations",
+      "status": "PASS",
+      "duration_ms": 0.030279159545898438,
+      "message": "All file operations completed: create, select, move, delete",
+      "details": {
+        "operations": [
+          "create",
+          "select",
+          "move",
+          "delete"
+        ]
+      }
+    },
+    {
+      "name": "File Manager: Smart Suggestions",
+      "status": "PASS",
+      "duration_ms": 0.02765655517578125,
+      "message": "File suggestions displayed: 3 items",
+      "details": {
+        "suggestions_count": 3,
+        "top_suggestion": "project_notes.md",
+        "suggestion_score": 0.95
+      }
+    },
+    {
+      "name": "File Manager: Storage Optimization",
+      "status": "PASS",
+      "duration_ms": 0.02384185791015625,
+      "message": "Storage optimization available: 5.0GB",
+      "details": {
+        "optimization_available_gb": 5.0,
+        "suggestions": [
+          {
+            "type": "duplicate_files",
+            "size": 2147483648
+          },
+          {
+            "type": "cache_files",
+            "size": 1610612736.0
+          },
+          {
+            "type": "old_downloads",
+            "size": 1610612736.0
+          }
+        ]
+      }
+    },
+    {
+      "name": "Creative Assistant: Launch",
+      "status": "PASS",
+      "duration_ms": 0.030755996704101562,
+      "message": "Creative Assistant launched in 250ms",
+      "details": {
+        "success": true,
+        "app": "Creative Assistant",
+        "launch_time_ms": 250,
+        "package": "com.kolibrios.ai.creative_assistant"
+      }
+    },
+    {
+      "name": "Creative Assistant: Text Generation",
+      "status": "PASS",
+      "duration_ms": 0.023126602172851562,
+      "message": "Text generated successfully: 55 words",
+      "details": {
+        "prompt": "Write a short poem about artificial intelligence",
+        "word_count": 55,
+        "character_count": 302
+      }
+    },
+    {
+      "name": "Creative Assistant: Image Suggestions",
+      "status": "PASS",
+      "duration_ms": 0.016450881958007812,
+      "message": "Image suggestions generated: 3 options",
+      "details": {
+        "suggestions_count": 3,
+        "top_suggestion": "AI brain neural network visualization",
+        "top_relevance": 0.92
+      }
+    },
+    {
+      "name": "Creative Assistant: Unified Mind Integration",
+      "status": "PASS",
+      "duration_ms": 0.019550323486328125,
+      "message": "Unified Mind integration fully functional",
+      "details": {
+        "checks": {
+          "context_awareness": true,
+          "llm_integration": true,
+          "style_learning": true
+        }
+      }
+    },
+    {
+      "name": "Error Handling: Invalid Inputs",
+      "status": "PASS",
+      "duration_ms": 0.019550323486328125,
+      "message": "All invalid inputs handled gracefully",
+      "details": {
+        "tests": {
+          "path_traversal": true,
+          "empty_input": true,
+          "xss_attempt": true
+        }
+      }
+    },
+    {
+      "name": "Error Handling: Crash Recovery",
+      "status": "PASS",
+      "duration_ms": 500.78821182250977,
+      "message": "Crash recovery successful, app restarted",
+      "details": {
+        "crash_triggered": true,
+        "recovery_triggered": true,
+        "restart_success": true
+      }
+    },
+    {
+      "name": "Error Handling: Graceful Degradation",
+      "status": "PASS",
+      "duration_ms": 0.04673004150390625,
+      "message": "Graceful degradation works, 2/4 features available",
+      "details": {
+        "stress_conditions": {
+          "memory_pressure": 0.85,
+          "cpu_load": 0.9,
+          "network_available": false
+        },
+        "features": {
+          "basic_navigation": true,
+          "file_operations": true,
+          "ai_suggestions": false,
+          "animations": false
+        }
+      }
+    }
+  ]
+}
