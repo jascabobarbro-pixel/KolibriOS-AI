@@ -196,14 +196,21 @@ impl ResourceManager {
 }
 
 /// Process error
-#[derive(Debug, Clone, thiserror::Error)]
+#[derive(Debug, Clone)]
 pub enum ProcessError {
-    #[error("Process not found")]
     ProcessNotFound,
-    #[error("Process already terminated")]
     AlreadyTerminated,
-    #[error("Resource limit exceeded")]
     ResourceLimitExceeded,
-    #[error("Permission denied")]
     PermissionDenied,
+}
+
+impl core::fmt::Display for ProcessError {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            ProcessError::ProcessNotFound => write!(f, "Process not found"),
+            ProcessError::AlreadyTerminated => write!(f, "Process already terminated"),
+            ProcessError::ResourceLimitExceeded => write!(f, "Resource limit exceeded"),
+            ProcessError::PermissionDenied => write!(f, "Permission denied"),
+        }
+    }
 }

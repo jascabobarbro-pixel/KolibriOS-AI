@@ -1,0 +1,264 @@
+{
+  "analysis_timestamp": "2025-01-27T12:00:00Z",
+  "repository": "KolibriOS-AI",
+  "errors": [
+    {
+      "id": "E001",
+      "severity": "critical",
+      "file": "kernel/src/lib.rs",
+      "line": 137,
+      "message": "thiserror crate requires std support but kernel is no_std",
+      "suggestion": "Replace thiserror with a custom error enum implementing Debug and Display, or use the 'thiserror-core' crate for no_std environments"
+    },
+    {
+      "id": "E002",
+      "severity": "critical",
+      "file": "cells/process_cell/src/lib.rs",
+      "line": 199,
+      "message": "thiserror crate requires std support but cell is no_std",
+      "suggestion": "Replace thiserror with a custom error implementation or use no_std compatible error handling"
+    },
+    {
+      "id": "E003",
+      "severity": "critical",
+      "file": "cells/ai_cell/src/lib.rs",
+      "line": 293,
+      "message": "thiserror crate requires std support but cell is no_std",
+      "suggestion": "Replace thiserror with a custom error implementation or use no_std compatible error handling"
+    },
+    {
+      "id": "E004",
+      "severity": "critical",
+      "file": "cells/network_cell/src/lib.rs",
+      "line": 210,
+      "message": "thiserror crate requires std support but cell is no_std",
+      "suggestion": "Replace thiserror with a custom error implementation or use no_std compatible error handling"
+    },
+    {
+      "id": "E005",
+      "severity": "critical",
+      "file": "cells/io_cell/src/lib.rs",
+      "line": 239,
+      "message": "thiserror crate requires std support but cell is no_std",
+      "suggestion": "Replace thiserror with a custom error implementation or use no_std compatible error handling"
+    },
+    {
+      "id": "E006",
+      "severity": "critical",
+      "file": "unified_ai_agent/core/src/lib.rs",
+      "line": 95,
+      "message": "thiserror crate requires std support but crate is no_std",
+      "suggestion": "Replace thiserror with a custom error implementation or use no_std compatible error handling"
+    },
+    {
+      "id": "E007",
+      "severity": "error",
+      "file": "kernel/src/genes/gene_trait.rs",
+      "line": 76,
+      "message": "Missing import for alloc::boxed::Box used in GeneRegistry",
+      "suggestion": "Add 'use alloc::boxed::Box;' at the top of the file or use alloc::boxed::Box explicitly"
+    },
+    {
+      "id": "E008",
+      "severity": "error",
+      "file": "kernel/src/genes/mod.rs",
+      "line": 157,
+      "message": "thiserror requires std but kernel is no_std",
+      "suggestion": "Implement custom error types with core::fmt::Display instead"
+    },
+    {
+      "id": "E009",
+      "severity": "warning",
+      "file": "kernel/src/arch/mod.rs",
+      "line": 9,
+      "message": "Unsafe inline assembly without proper documentation",
+      "suggestion": "Add safety documentation comments explaining the invariants"
+    },
+    {
+      "id": "E010",
+      "severity": "error",
+      "file": "kernel/Cargo.toml",
+      "line": 16,
+      "message": "spin crate version 0.9 may have compatibility issues with no_std",
+      "suggestion": "Verify spin crate works with no_std or consider using core::sync::atomic for spinlocks"
+    }
+  ],
+  "warnings": [
+    {
+      "id": "W001",
+      "severity": "warning",
+      "file": "unified_ai_agent/unified_mind/llm/__init__.py",
+      "line": 102,
+      "message": "Optional LLM client imports may fail silently at runtime",
+      "suggestion": "Add explicit error handling and user feedback when LLM providers are unavailable"
+    },
+    {
+      "id": "W002",
+      "severity": "warning",
+      "file": "unified_ai_agent/unified_mind/main.py",
+      "line": 18,
+      "message": "sys.path manipulation may cause import issues",
+      "suggestion": "Use proper package installation or PYTHONPATH configuration instead"
+    },
+    {
+      "id": "W003",
+      "severity": "warning",
+      "file": "unified_ai_agent/unified_mind/interface/cli.py",
+      "line": 10,
+      "message": "readline module not available on all platforms (Windows)",
+      "suggestion": "Add try-except around readline import with fallback for Windows"
+    },
+    {
+      "id": "W004",
+      "severity": "warning",
+      "file": "cells/memory_cell/src/lib.rs",
+      "line": 222,
+      "message": "Prometheus registry reference may panic if metrics not initialized",
+      "suggestion": "Add proper error handling or Option wrapper for metrics registry"
+    },
+    {
+      "id": "W005",
+      "severity": "warning",
+      "file": "cells/processor_cell/src/lib.rs",
+      "line": 236,
+      "message": "Prometheus registry reference may panic if metrics not initialized",
+      "suggestion": "Add proper error handling or Option wrapper for metrics registry"
+    },
+    {
+      "id": "W006",
+      "severity": "warning",
+      "file": "kernel/src/lib.rs",
+      "line": 30,
+      "message": "env! macro requires CARGO_PKG_VERSION at compile time",
+      "suggestion": "Consider using a const for no_std environments or ensure build environment is correct"
+    },
+    {
+      "id": "W007",
+      "severity": "info",
+      "file": "Cargo.toml",
+      "line": 6,
+      "message": "Workspace member 'cells/process_cell' has different architecture (no_std) than other cells",
+      "suggestion": "Consider separating no_std cells into a different workspace or documenting the difference"
+    },
+    {
+      "id": "W008",
+      "severity": "warning",
+      "file": "cells/memory_cell/Cargo.toml",
+      "line": 17,
+      "message": "tonic 0.10 and prost 0.12 may have version conflicts with other dependencies",
+      "suggestion": "Run 'cargo tree' to verify dependency compatibility"
+    }
+  ],
+  "missing_files": [
+    {
+      "path": "cnd_orchestrator/protos/cnd_orchestrator_pb2.py",
+      "referenced_in": "unified_ai_agent/unified_mind/core/unified_mind.py:600",
+      "suggestion": "Generate protobuf files using: python -m grpc_tools.protoc"
+    },
+    {
+      "path": "cnd_orchestrator/protos/cnd_orchestrator_pb2_grpc.py",
+      "referenced_in": "unified_ai_agent/unified_mind/core/unified_mind.py:600",
+      "suggestion": "Generate protobuf files using: python -m grpc_tools.protoc"
+    },
+    {
+      "path": "cells/protos/*.rs",
+      "referenced_in": "Multiple cell crates expecting generated protobuf Rust code",
+      "suggestion": "Run build.rs scripts to generate protobuf Rust code"
+    }
+  ],
+  "dependency_issues": [
+    {
+      "id": "D001",
+      "package": "thiserror",
+      "version": "1.0",
+      "issue": "Requires std library but used in no_std crates",
+      "affected_crates": [
+        "kernel",
+        "cells/process_cell",
+        "cells/ai_cell",
+        "cells/network_cell",
+        "cells/io_cell",
+        "unified_ai_agent/core"
+      ],
+      "resolution": "Use custom error types or thiserror-core for no_std"
+    },
+    {
+      "id": "D002",
+      "package": "serde",
+      "version": "1.0",
+      "issue": "Requires alloc feature for no_std environments",
+      "affected_crates": [
+        "kernel",
+        "cells/process_cell",
+        "cells/ai_cell",
+        "cells/network_cell",
+        "cells/io_cell"
+      ],
+      "resolution": "Add 'alloc' feature to serde dependency for no_std crates"
+    },
+    {
+      "id": "D003",
+      "package": "tonic",
+      "version": "0.10",
+      "issue": "gRPC library requires std and tokio runtime",
+      "affected_crates": ["cells/memory_cell", "cells/processor_cell"],
+      "resolution": "These cells correctly use std, no action needed"
+    },
+    {
+      "id": "D004",
+      "package": "prometheus",
+      "version": "0.14",
+      "issue": "Metrics library requires std",
+      "affected_crates": ["cells/memory_cell", "cells/processor_cell"],
+      "resolution": "These cells correctly use std, no action needed"
+    },
+    {
+      "id": "D005",
+      "package": "tokio",
+      "version": "1.35",
+      "issue": "Async runtime requires std",
+      "affected_crates": [
+        "cells/memory_cell",
+        "cells/processor_cell",
+        "koli_lang/runtime",
+        "unified_ai_agent/core"
+      ],
+      "resolution": "Only enable for std builds, verify feature flags"
+    }
+  ],
+  "version_conflicts": [],
+  "priority_order": [
+    "E001",
+    "E002",
+    "E003",
+    "E004",
+    "E005",
+    "E006",
+    "E008",
+    "E007",
+    "E010",
+    "E009",
+    "D001",
+    "D002",
+    "W001",
+    "W002",
+    "W003",
+    "W004",
+    "W005",
+    "W006",
+    "W008",
+    "W007",
+    "D003",
+    "D004",
+    "D005"
+  ],
+  "summary": {
+    "total_errors": 10,
+    "critical_errors": 6,
+    "regular_errors": 4,
+    "total_warnings": 8,
+    "missing_files": 3,
+    "dependency_issues": 5,
+    "version_conflicts": 0
+  }
+}

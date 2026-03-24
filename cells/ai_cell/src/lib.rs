@@ -290,16 +290,23 @@ pub struct AiStats {
 }
 
 /// AI error types
-#[derive(Debug, Clone, thiserror::Error)]
+#[derive(Debug, Clone)]
 pub enum AiError {
-    #[error("Model not found")]
     ModelNotFound,
-    #[error("Model not ready")]
     ModelNotReady,
-    #[error("Inference failed: {0}")]
     InferenceFailed(String),
-    #[error("Context too large")]
     ContextTooLarge,
-    #[error("Memory allocation failed")]
     MemoryError,
+}
+
+impl core::fmt::Display for AiError {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            AiError::ModelNotFound => write!(f, "Model not found"),
+            AiError::ModelNotReady => write!(f, "Model not ready"),
+            AiError::InferenceFailed(s) => write!(f, "Inference failed: {}", s),
+            AiError::ContextTooLarge => write!(f, "Context too large"),
+            AiError::MemoryError => write!(f, "Memory allocation failed"),
+        }
+    }
 }

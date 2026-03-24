@@ -1,0 +1,350 @@
+{
+  "timestamp": "2026-03-24T03:58:20.525653",
+  "checks": [
+    {
+      "check": "directory",
+      "path": "kernel",
+      "status": "pass"
+    },
+    {
+      "check": "directory",
+      "path": "vm",
+      "status": "pass"
+    },
+    {
+      "check": "directory",
+      "path": "cells/memory_cell",
+      "status": "pass"
+    },
+    {
+      "check": "directory",
+      "path": "cells/processor_cell",
+      "status": "pass"
+    },
+    {
+      "check": "directory",
+      "path": "cells/protocols",
+      "status": "pass"
+    },
+    {
+      "check": "directory",
+      "path": "cells/io_cell",
+      "status": "pass"
+    },
+    {
+      "check": "directory",
+      "path": "cells/network_cell",
+      "status": "pass"
+    },
+    {
+      "check": "directory",
+      "path": "cells/process_cell",
+      "status": "pass"
+    },
+    {
+      "check": "directory",
+      "path": "cells/ai_cell",
+      "status": "pass"
+    },
+    {
+      "check": "directory",
+      "path": "koli_lang/compiler",
+      "status": "pass"
+    },
+    {
+      "check": "directory",
+      "path": "koli_lang/runtime",
+      "status": "pass"
+    },
+    {
+      "check": "directory",
+      "path": "unified_ai_agent/core",
+      "status": "pass"
+    },
+    {
+      "check": "directory",
+      "path": "apps/gui",
+      "status": "pass"
+    },
+    {
+      "check": "directory",
+      "path": "apps/file_manager",
+      "status": "pass"
+    },
+    {
+      "check": "directory",
+      "path": "apps/creative_assistant",
+      "status": "pass"
+    },
+    {
+      "check": "directory",
+      "path": "docs",
+      "status": "pass"
+    },
+    {
+      "check": "directory",
+      "path": "tests",
+      "status": "pass"
+    },
+    {
+      "check": "directory",
+      "path": "scripts",
+      "status": "pass"
+    }
+  ],
+  "files": {
+    "Cargo.toml": {
+      "type": "cargo",
+      "status": "ok",
+      "issues": []
+    },
+    "KolibriOS-AI/Cargo.toml": {
+      "type": "cargo",
+      "status": "ok",
+      "issues": []
+    },
+    "vm/Cargo.toml": {
+      "type": "cargo",
+      "status": "ok",
+      "issues": []
+    },
+    "kernel/Cargo.toml": {
+      "type": "cargo",
+      "status": "ok",
+      "issues": []
+    },
+    "unified_ai_agent/core/Cargo.toml": {
+      "type": "cargo",
+      "status": "warning",
+      "issues": [
+        "thiserror in no_std crate"
+      ]
+    },
+    "KolibriOS-AI/kernel/Cargo.toml": {
+      "type": "cargo",
+      "status": "warning",
+      "issues": [
+        "thiserror in no_std crate"
+      ]
+    },
+    "KolibriOS-AI/unified_ai_agent/core/Cargo.toml": {
+      "type": "cargo",
+      "status": "warning",
+      "issues": [
+        "thiserror in no_std crate"
+      ]
+    },
+    "KolibriOS-AI/koli_lang/compiler/Cargo.toml": {
+      "type": "cargo",
+      "status": "ok",
+      "issues": []
+    },
+    "KolibriOS-AI/koli_lang/runtime/Cargo.toml": {
+      "type": "cargo",
+      "status": "warning",
+      "issues": [
+        "thiserror in no_std crate"
+      ]
+    },
+    "KolibriOS-AI/cells/io_cell/Cargo.toml": {
+      "type": "cargo",
+      "status": "warning",
+      "issues": [
+        "thiserror in no_std crate"
+      ]
+    },
+    "KolibriOS-AI/cells/processor_cell/Cargo.toml": {
+      "type": "cargo",
+      "status": "ok",
+      "issues": []
+    },
+    "KolibriOS-AI/cells/network_cell/Cargo.toml": {
+      "type": "cargo",
+      "status": "warning",
+      "issues": [
+        "thiserror in no_std crate"
+      ]
+    },
+    "KolibriOS-AI/cells/memory_cell/Cargo.toml": {
+      "type": "cargo",
+      "status": "ok",
+      "issues": []
+    },
+    "KolibriOS-AI/cells/ai_cell/Cargo.toml": {
+      "type": "cargo",
+      "status": "warning",
+      "issues": [
+        "thiserror in no_std crate"
+      ]
+    },
+    "KolibriOS-AI/cells/process_cell/Cargo.toml": {
+      "type": "cargo",
+      "status": "warning",
+      "issues": [
+        "thiserror in no_std crate"
+      ]
+    },
+    "apps/file_manager/Cargo.toml": {
+      "type": "cargo",
+      "status": "ok",
+      "issues": []
+    },
+    "apps/creative_assistant/Cargo.toml": {
+      "type": "cargo",
+      "status": "ok",
+      "issues": []
+    },
+    "apps/gui/Cargo.toml": {
+      "type": "cargo",
+      "status": "ok",
+      "issues": []
+    },
+    "koli_lang/compiler/Cargo.toml": {
+      "type": "cargo",
+      "status": "ok",
+      "issues": []
+    },
+    "koli_lang/runtime/Cargo.toml": {
+      "type": "cargo",
+      "status": "warning",
+      "issues": [
+        "thiserror in no_std crate"
+      ]
+    },
+    "cells/io_cell/Cargo.toml": {
+      "type": "cargo",
+      "status": "warning",
+      "issues": [
+        "thiserror in no_std crate"
+      ]
+    },
+    "cells/processor_cell/Cargo.toml": {
+      "type": "cargo",
+      "status": "ok",
+      "issues": []
+    },
+    "cells/protocols/Cargo.toml": {
+      "type": "cargo",
+      "status": "ok",
+      "issues": []
+    },
+    "cells/network_cell/Cargo.toml": {
+      "type": "cargo",
+      "status": "warning",
+      "issues": [
+        "thiserror in no_std crate"
+      ]
+    },
+    "cells/memory_cell/Cargo.toml": {
+      "type": "cargo",
+      "status": "ok",
+      "issues": []
+    },
+    "cells/ai_cell/Cargo.toml": {
+      "type": "cargo",
+      "status": "warning",
+      "issues": [
+        "thiserror in no_std crate"
+      ]
+    },
+    "cells/process_cell/Cargo.toml": {
+      "type": "cargo",
+      "status": "warning",
+      "issues": [
+        "thiserror in no_std crate"
+      ]
+    }
+  },
+  "issues": [],
+  "warnings": [
+    {
+      "file": "unified_ai_agent/core/Cargo.toml",
+      "issues": [
+        "thiserror in no_std crate"
+      ]
+    },
+    {
+      "file": "KolibriOS-AI/kernel/Cargo.toml",
+      "issues": [
+        "thiserror in no_std crate"
+      ]
+    },
+    {
+      "file": "KolibriOS-AI/unified_ai_agent/core/Cargo.toml",
+      "issues": [
+        "thiserror in no_std crate"
+      ]
+    },
+    {
+      "file": "KolibriOS-AI/koli_lang/runtime/Cargo.toml",
+      "issues": [
+        "thiserror in no_std crate"
+      ]
+    },
+    {
+      "file": "KolibriOS-AI/cells/io_cell/Cargo.toml",
+      "issues": [
+        "thiserror in no_std crate"
+      ]
+    },
+    {
+      "file": "KolibriOS-AI/cells/network_cell/Cargo.toml",
+      "issues": [
+        "thiserror in no_std crate"
+      ]
+    },
+    {
+      "file": "KolibriOS-AI/cells/ai_cell/Cargo.toml",
+      "issues": [
+        "thiserror in no_std crate"
+      ]
+    },
+    {
+      "file": "KolibriOS-AI/cells/process_cell/Cargo.toml",
+      "issues": [
+        "thiserror in no_std crate"
+      ]
+    },
+    {
+      "file": "koli_lang/runtime/Cargo.toml",
+      "issues": [
+        "thiserror in no_std crate"
+      ]
+    },
+    {
+      "file": "cells/io_cell/Cargo.toml",
+      "issues": [
+        "thiserror in no_std crate"
+      ]
+    },
+    {
+      "file": "cells/network_cell/Cargo.toml",
+      "issues": [
+        "thiserror in no_std crate"
+      ]
+    },
+    {
+      "file": "cells/ai_cell/Cargo.toml",
+      "issues": [
+        "thiserror in no_std crate"
+      ]
+    },
+    {
+      "file": "cells/process_cell/Cargo.toml",
+      "issues": [
+        "thiserror in no_std crate"
+      ]
+    },
+    {
+      "file": "skills/get-fortune-analysis/lunar_python.py",
+      "issue": "Syntax error: invalid syntax (lunar_python.py, line 1)"
+    }
+  ],
+  "summary": {
+    "checks_passed": 18,
+    "checks_total": 18,
+    "issues_count": 0,
+    "warnings_count": 14,
+    "status": "PASS"
+  }
+}

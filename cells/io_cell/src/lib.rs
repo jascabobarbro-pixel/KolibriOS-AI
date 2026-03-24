@@ -236,17 +236,21 @@ pub struct Buffer {
 }
 
 /// I/O error types
-#[derive(Debug, Clone, thiserror::Error)]
+#[derive(Debug, Clone)]
 pub enum IoError {
-    #[error("Device not found")]
     DeviceNotFound,
-    
-    #[error("I/O error: {0}")]
     IoFailed(String),
-    
-    #[error("Buffer allocation failed")]
     BufferAllocFailed,
-    
-    #[error("Operation timeout")]
     Timeout,
+}
+
+impl core::fmt::Display for IoError {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            IoError::DeviceNotFound => write!(f, "Device not found"),
+            IoError::IoFailed(s) => write!(f, "I/O error: {}", s),
+            IoError::BufferAllocFailed => write!(f, "Buffer allocation failed"),
+            IoError::Timeout => write!(f, "Operation timeout"),
+        }
+    }
 }
