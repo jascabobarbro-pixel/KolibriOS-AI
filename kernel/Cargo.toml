@@ -10,10 +10,10 @@ name = "kolibrios_kernel"
 path = "src/lib.rs"
 
 [dependencies]
-serde = { workspace = true, features = ["derive"] }
-thiserror = { workspace = true }
-log = { workspace = true }
-spin = "0.9"
+# no_std compatible dependencies only
+serde = { workspace = true, optional = true }
+log = { workspace = true, optional = true }
+spin = "0.9"  # no_std mutex
 
 # Security subsystem dependencies
 # Note: Using alloc for collections in no_std environment
@@ -32,6 +32,8 @@ self_healing = []
 ai_integration = []
 neural_scheduler = []
 security_audit = []  # Enable detailed security audit logging
+serde_support = ["serde"]
+logging = ["log"]
 
 [dev-dependencies]
 proptest = { workspace = true }

@@ -104,26 +104,27 @@ pub struct RuntimeStats {
 }
 
 /// Runtime error
-#[derive(Debug, Clone, thiserror::Error)]
+#[derive(Debug, Clone)]
 pub enum RuntimeError {
-    #[error("Execution error: {0}")]
     ExecutionError(String),
-    
-    #[error("Stack overflow")]
     StackOverflow,
-    
-    #[error("Out of memory")]
     OutOfMemory,
-    
-    #[error("Function not found: {0}")]
     FunctionNotFound(String),
-    
-    #[error("Type error: {0}")]
     TypeError(String),
-    
-    #[error("AI capabilities disabled")]
     AiDisabled,
-    
-    #[error("AI error: {0}")]
     AiError(String),
+}
+
+impl core::fmt::Display for RuntimeError {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            RuntimeError::ExecutionError(s) => write!(f, "Execution error: {}", s),
+            RuntimeError::StackOverflow => write!(f, "Stack overflow"),
+            RuntimeError::OutOfMemory => write!(f, "Out of memory"),
+            RuntimeError::FunctionNotFound(s) => write!(f, "Function not found: {}", s),
+            RuntimeError::TypeError(s) => write!(f, "Type error: {}", s),
+            RuntimeError::AiDisabled => write!(f, "AI capabilities disabled"),
+            RuntimeError::AiError(s) => write!(f, "AI error: {}", s),
+        }
+    }
 }

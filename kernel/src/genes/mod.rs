@@ -153,21 +153,24 @@ pub enum GeneEffect {
     Log { level: String, message: String },
 }
 
-/// Gene error
-#[derive(Debug, Clone, thiserror::Error)]
+/// Gene error (custom implementation for no_std)
+#[derive(Debug, Clone)]
 pub enum GeneError {
-    #[error("Gene not found: {0}")]
     NotFound(String),
-
-    #[error("Gene activation failed: {0}")]
     ActivationFailed(String),
-
-    #[error("Invalid configuration: {0}")]
     InvalidConfig(String),
-
-    #[error("Gene is disabled: {0}")]
     Disabled(String),
-
-    #[error("Resource unavailable: {0}")]
     ResourceUnavailable(String),
+}
+
+impl core::fmt::Display for GeneError {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            GeneError::NotFound(s) => write!(f, "Gene not found: {}", s),
+            GeneError::ActivationFailed(s) => write!(f, "Gene activation failed: {}", s),
+            GeneError::InvalidConfig(s) => write!(f, "Invalid configuration: {}", s),
+            GeneError::Disabled(s) => write!(f, "Gene is disabled: {}", s),
+            GeneError::ResourceUnavailable(s) => write!(f, "Resource unavailable: {}", s),
+        }
+    }
 }

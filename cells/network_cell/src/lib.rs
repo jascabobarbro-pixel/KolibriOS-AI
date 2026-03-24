@@ -207,16 +207,23 @@ pub struct Route {
 }
 
 /// Network error
-#[derive(Debug, Clone, thiserror::Error)]
+#[derive(Debug, Clone)]
 pub enum NetworkError {
-    #[error("Interface not found")]
     InterfaceNotFound,
-    #[error("Connection not found")]
     ConnectionNotFound,
-    #[error("Not connected")]
     NotConnected,
-    #[error("Connection failed: {0}")]
     ConnectionFailed(String),
-    #[error("Timeout")]
     Timeout,
+}
+
+impl core::fmt::Display for NetworkError {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            NetworkError::InterfaceNotFound => write!(f, "Interface not found"),
+            NetworkError::ConnectionNotFound => write!(f, "Connection not found"),
+            NetworkError::NotConnected => write!(f, "Not connected"),
+            NetworkError::ConnectionFailed(s) => write!(f, "Connection failed: {}", s),
+            NetworkError::Timeout => write!(f, "Timeout"),
+        }
+    }
 }

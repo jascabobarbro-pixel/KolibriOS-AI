@@ -134,14 +134,28 @@ impl Default for LivingKernel {
     fn default() -> Self { Self::new(1024 * 1024 * 1024) }
 }
 
-#[derive(Debug, Clone, thiserror::Error)]
+/// Kernel error types (custom implementation for no_std)
+#[derive(Debug, Clone)]
 pub enum KernelError {
-    #[error("Memory initialization failed: {0}")] MemoryInit(String),
-    #[error("IPC initialization failed: {0}")] IpcInit(String),
-    #[error("Scheduler initialization failed: {0}")] SchedulerInit(String),
-    #[error("Gene error: {0}")] GeneError(String),
-    #[error("Cell connection failed: {0}")] CellConnection(String),
-    #[error("Invalid kernel state")] InvalidState,
+    MemoryInit(String),
+    IpcInit(String),
+    SchedulerInit(String),
+    GeneError(String),
+    CellConnection(String),
+    InvalidState,
+}
+
+impl core::fmt::Display for KernelError {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            KernelError::MemoryInit(s) => write!(f, "Memory initialization failed: {}", s),
+            KernelError::IpcInit(s) => write!(f, "IPC initialization failed: {}", s),
+            KernelError::SchedulerInit(s) => write!(f, "Scheduler initialization failed: {}", s),
+            KernelError::GeneError(s) => write!(f, "Gene error: {}", s),
+            KernelError::CellConnection(s) => write!(f, "Cell connection failed: {}", s),
+            KernelError::InvalidState => write!(f, "Invalid kernel state"),
+        }
+    }
 }
 
 #[no_mangle]

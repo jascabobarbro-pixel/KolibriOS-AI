@@ -92,23 +92,25 @@ pub enum Helpfulness {
 }
 
 /// Agent error types
-#[derive(Debug, Clone, thiserror::Error)]
+#[derive(Debug, Clone)]
 pub enum AgentError {
-    #[error("Context overflow")]
     ContextOverflow,
-    
-    #[error("Model error: {0}")]
     ModelError(String),
-    
-    #[error("Command not found: {0}")]
     CommandNotFound(String),
-    
-    #[error("Permission denied: {0}")]
     PermissionDenied(String),
-    
-    #[error("Memory error: {0}")]
     MemoryError(String),
-    
-    #[error("Internal error: {0}")]
     InternalError(String),
+}
+
+impl core::fmt::Display for AgentError {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            AgentError::ContextOverflow => write!(f, "Context overflow"),
+            AgentError::ModelError(s) => write!(f, "Model error: {}", s),
+            AgentError::CommandNotFound(s) => write!(f, "Command not found: {}", s),
+            AgentError::PermissionDenied(s) => write!(f, "Permission denied: {}", s),
+            AgentError::MemoryError(s) => write!(f, "Memory error: {}", s),
+            AgentError::InternalError(s) => write!(f, "Internal error: {}", s),
+        }
+    }
 }
